@@ -18,11 +18,35 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const { conn, Diet } = require('./src/db.js');
+const { getDietsData } = require('./dietsData')
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
-  });
+conn.sync({ force: false }).then(() => {
+    server.listen(3001, () => {
+        console.log('%s listening at 3001'); // eslint-disable-line no-console
+        //console.log(getDietsData)
+
+        /*Pre cargamos las dietas*/
+        /*
+        let $saveData = [];
+        getDietsData.map(dt => {
+            let $data = Diet.findOrCreate({
+                where: {
+                    name: dt.name,
+                    description: dt.description
+                }
+            })
+
+            $saveData.push($data)
+        })
+
+        Promise.all($saveData)
+            .then(res => {
+                console.log("diets precargadas");
+            });
+
+         */
+    });
+
 });

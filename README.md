@@ -74,7 +74,7 @@ __IMPORTANTE__: Para las funcionalidades de filtrado y ordenamiento NO pueden ut
 
   * GET https://api.spoonacular.com/recipes/complexSearch
     - Para obtener mayor información sobre las recetas, como por ejemplo el tipo de dieta deben agregar el flag `&addRecipeInformation=true` a este endpoint
-    - Para los tipos de dieta deben tener en cuenta las propiedades vegetarian, vegan, glutenFree por un lado y también analizar las que se incluyan dentro de la propiedad `diets`
+    - Para los tipos de dieta deben tener en cuenta las propiedades vegetarian, vegan, glutenFree por un lado y también analizar las que se incluyan dentro de la propiedad `dietsData`
   * GET https://api.spoonacular.com/recipes/{id}/information
 
 ### Requerimientos mínimos:
@@ -161,7 +161,7 @@ __IMPORTANTE__: No está permitido utilizar los filtrados, ordenamientos y pagin
   - Incluir los tipos de dieta asociados
 - [ ] __GET /types__:
   - Obtener todos los tipos de dieta posibles
-  - En una primera instancia, cuando no exista ninguno, deberán precargar la base de datos con los tipos de datos indicados por spoonacular [acá](https://spoonacular.com/food-api/docs#Diets)
+  - En una primera instancia, cuando no exista ninguno, deberán precargar la base de datos con los tipos de datos indicados por spoonacular [acá](https://spoonacular.com/food-api/docs#NavDiets)
 - [ ] __POST /recipe__:
   - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de recetas por body
   - Crea una receta en la base de datos
