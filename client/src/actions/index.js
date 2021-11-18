@@ -47,7 +47,7 @@ const getRecipes = ({name}) => {
 }
 
 const getRecipeDetail = (id, origin) => {
-    let url = `http://localhost:3001/recipe/${id}?origin=${origin}`;
+    let url = `http://localhost:3001/recipes/${id}?origin=${origin}`;
     return function(dispatch) {
         return fetch(url)
             .then(response => response.json())
@@ -58,7 +58,7 @@ const getRecipeDetail = (id, origin) => {
 }
 
 const addRecipeDB = (recipe) => {
-    let url = "http://localhost:3001/recipes";
+    let url = `http://localhost:3001/recipes`;
     return async (dispatch) => {
         return await axios({
             method: 'POST',
@@ -85,7 +85,7 @@ const getDietsAll = () => {
 }
 
 const addDietDB = (diet) => {
-    let url = "http://localhost:3001/types";
+    let url = `http://localhost:3001/types`;
     return async (dispatch) => {
         return await axios({
             method: 'POST',

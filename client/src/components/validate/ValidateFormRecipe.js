@@ -6,8 +6,8 @@ export function validate(input) {
         errors.image = 'URL Picture is required';
     }
 
-    if (!input.title) {
-        errors.title = 'Title is required';
+    if (!input.name) {
+        errors.name = 'Title is required';
     }
 
     if (!input.summary) {

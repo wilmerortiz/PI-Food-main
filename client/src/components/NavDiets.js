@@ -4,24 +4,47 @@ import {getDietsAll, filterByDietType, searchDiet} from "../actions"
 import {connect} from "react-redux";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import logo from "../assets/img/cooking.png";
+import {Link} from "react-router-dom";
 
-const NavDiets = ({getDietsAll, listDiets, filterByDietType, searchDiet}) => {
+const NavDiets = ({getDietsAll, listDiets, filterByDietType, searchDiet, sidebar, setSidebar}) => {
     const [filter, setFilter] = useState('');
     const [search, setSearch] = useState('');
-
+    /*const [sidebar, setSidebar] = useState(false);*/
+    
+    const showSidebar = () => {
+        setSidebar(!sidebar)
+    }
+    
     useEffect(() => {
         getDietsAll()
     }, []);
 
     useEffect(() => {
-        filterByDietType(filter)
         searchDiet(search)
-    }, [filter, search]);
+    }, [search]);
 
+    useEffect(() => {
+        filterByDietType(filter)
+    }, [filter]);
 
     return(
-        <div>
-            <h3>Filter by diet type</h3>
+        <>
+            <div className={`show`}>
+                <button onClick={showSidebar} className={`showmenu`} >
+                    <FontAwesomeIcon icon="fa-solid fa-bars" />
+                </button>
+            </div>
+
+        <div className={sidebar ? 'side-bar active' : 'side-bar'}>
+
+            <div className="nav-header">
+                <h3>Filter by diet type</h3>
+                <button onClick={showSidebar}>
+                    <FontAwesomeIcon icon="fa-solid fa-x" />
+                </button>
+            </div>
+
             <ul>
                 <li>
                     <form action="">
@@ -48,12 +71,13 @@ const NavDiets = ({getDietsAll, listDiets, filterByDietType, searchDiet}) => {
                 ))}
             </ul>
         </div>
+        </>
     )
 }
 
 function mapStateToProps(state) {
     return {
-        listDiets: state.dietsLoaded
+        listDiets: state.recipe.dietsLoaded
     };
 }
 

@@ -13,11 +13,11 @@
             "description": "No ingredients may contain meat or meat by-products, such as bones or gelatin."
         },
         {
-            "name": "Lacto-Vegetarian",
+            "name": "Lacto Vegetarian",
             "description": "All ingredients must be vegetarian and none of the ingredients can be or contain egg."
         },
         {
-            "name": "Ovo-Vegetarian",
+            "name": "Ovo Vegetarian",
             "description": "All ingredients must be vegetarian and none of the ingredients can be or contain dairy."
         },
         {
@@ -41,7 +41,23 @@
             "description": "FODMAP stands for \"fermentable oligo-, di-, mono-saccharides and polyols\". Our ontology knows which foods are considered high in these types of carbohydrates (e.g. legumes, wheat, and dairy products)"
         },
         {
-            "name": "Whole30",
+            "name": "Whole 30",
+            "description": "Allowed ingredients include meat, fish/seafood, eggs, vegetables, fresh fruit, coconut oil, olive oil, small amounts of dried fruit and nuts/seeds. Ingredients not allowed include added sweeteners (natural and artificial, except small amounts of fruit juice), dairy (except clarified butter or ghee), alcohol, grains, legumes (except green beans, sugar snap peas, and snow peas), and food additives, such as carrageenan, MSG, and sulfites."
+        },
+        {
+            "name": "Ketogenic",
+            "description": "Allowed ingredients include meat, fish/seafood, eggs, vegetables, fresh fruit, coconut oil, olive oil, small amounts of dried fruit and nuts/seeds. Ingredients not allowed include added sweeteners (natural and artificial, except small amounts of fruit juice), dairy (except clarified butter or ghee), alcohol, grains, legumes (except green beans, sugar snap peas, and snow peas), and food additives, such as carrageenan, MSG, and sulfites."
+        },
+        {
+            "name": " Lacto ovo vegetarian",
+            "description": "Allowed ingredients include meat, fish/seafood, eggs, vegetables, fresh fruit, coconut oil, olive oil, small amounts of dried fruit and nuts/seeds. Ingredients not allowed include added sweeteners (natural and artificial, except small amounts of fruit juice), dairy (except clarified butter or ghee), alcohol, grains, legumes (except green beans, sugar snap peas, and snow peas), and food additives, such as carrageenan, MSG, and sulfites."
+        },
+        {
+            "name": "Dairy free",
+            "description": "Allowed ingredients include meat, fish/seafood, eggs, vegetables, fresh fruit, coconut oil, olive oil, small amounts of dried fruit and nuts/seeds. Ingredients not allowed include added sweeteners (natural and artificial, except small amounts of fruit juice), dairy (except clarified butter or ghee), alcohol, grains, legumes (except green beans, sugar snap peas, and snow peas), and food additives, such as carrageenan, MSG, and sulfites."
+        },
+        {
+            "name": "Paleolithic",
             "description": "Allowed ingredients include meat, fish/seafood, eggs, vegetables, fresh fruit, coconut oil, olive oil, small amounts of dried fruit and nuts/seeds. Ingredients not allowed include added sweeteners (natural and artificial, except small amounts of fruit juice), dairy (except clarified butter or ghee), alcohol, grains, legumes (except green beans, sugar snap peas, and snow peas), and food additives, such as carrageenan, MSG, and sulfites."
         }
     ];

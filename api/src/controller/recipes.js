@@ -7,6 +7,7 @@ const { API_KEY } = process.env
 
 async function getRecipes(request, response){
     const { nombre } = request.query
+
     let url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true`;
     let $data = [];
     try{
@@ -18,25 +19,27 @@ async function getRecipes(request, response){
                 url: url,
                 params: {
                     number: '100',
+                    instructionsRequired: true,
+                    //maxReadyTime: true
                 }
             };
 
             const recipe = await Recipe.findAll({
+                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes'],
                 order: [['id', 'DESC']],
                 include: {
                     model: Diet,
-                    attributes: ['name']
+                    attributes: ['id', 'name']
                 }
-            })/*.then(recipes => {
-                return recipes
-            })*/
+            })
 
             if(recipe){
                 recipe.map(rc => $data.push(rc))
             }
 
+            /*
             axios.request(options).then(function (resp) {
-                console.log('respuesta', resp)
+                //console.log('respuesta', resp)
                 if(resp.data.status !== 'failure'){
                     resp.data.results.map(rc => $data.push(rc))
                 }
@@ -46,7 +49,7 @@ async function getRecipes(request, response){
                 response.send($data)
                 //console.error(error);
             });
-
+            */
         }else{
 
             let options = {
@@ -55,12 +58,15 @@ async function getRecipes(request, response){
                 params: {
                     query: nombre,
                     number: '100',
+                    instructionsRequired: true,
+                    //maxReadyTime: true
                 }
             };
 
             const recipe = await Recipe.findAll({
+                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes'],
                 where: {
-                    title: {
+                    name: {
                         [Op.iLike] : `%${nombre}%`
                     }
                 },
@@ -71,6 +77,7 @@ async function getRecipes(request, response){
                 recipe.map(rc => $data.push(rc))
             }
 
+            /*
             axios.request(options).then(function (resp) {
 
                 if(resp.data.status !== 'failure' > 0){
@@ -82,60 +89,14 @@ async function getRecipes(request, response){
                 response.send($data)
                 //console.error(error);
             });
+
+             */
         }
 
-
-
-        //response.send($data)
+        response.send($data)
 
     }catch (error){
-        console.log(error)
-    }
-}
-
-async function getRecipesName(request, response){
-    const { nombre } = request.query
-    let url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true`;
-    try{
-        let $data = [];
-        const recipe = await Recipe.findAll({
-            where: {
-                title: {
-                    [Op.iLike] : `%${nombre}%`
-                }
-            },
-            include: Diet
-        });
-
-        if(recipe){
-            recipe.map(rc => $data.push(rc))
-        }
-
-        const axios = require("axios").default;
-
-        let options = {
-            method: 'GET',
-            url: url,
-            params: {
-                query: nombre,
-                number: '100',
-            }
-        };
-
-        axios.request(options).then(function (resp) {
-
-            if(resp.data.results.length > 0){
-
-                resp.data.results.map(rc => $data.push(rc))
-            }
-
-            response.send($data)
-        }).catch(function (error) {
-            console.error(error);
-        });
-
-    }catch (error){
-        console.log(error)
+        return response.status(500).send(error.message)
     }
 }
 
@@ -152,13 +113,14 @@ async function getRecipesId(request, response){
             };
 
             axios.request(options).then(function (resp) {
-                console.log(resp.data);
+                //console.log(resp.data);
                 response.json(resp.data)
             }).catch(function (error) {
                 console.error(error);
             });
         }else{
             const recipe = await Recipe.findByPk(idReceta, {
+                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes'],
                 include: Diet
             });
 
@@ -167,17 +129,17 @@ async function getRecipesId(request, response){
         }
 
     }catch (error){
-        console.log(error)
+        return response.status(500).send(error.message)
     }
 }
 
 async function addRecipe(request, response){
-    console.log(request.body);
-    const {title, image, summary, spoonacularScore, healthScore, instructions, origin, dishTypes, types} = request.body
+    //console.log(request.body);
+    const {name, image, summary, spoonacularScore, healthScore, instructions, origin, dishTypes, types} = request.body
 
     try {
         let newRecipe = await Recipe.create({
-            title,
+            name,
             image,
             summary,
             spoonacularScore,
@@ -185,8 +147,6 @@ async function addRecipe(request, response){
             instructions,
             origin,
             dishTypes
-        },{
-            fields: ['title', 'image', 'summary', 'spoonacularScore', 'healthScore', 'instructions', 'origin', 'dishTypes']
         })
 
         await newRecipe.addDiets(types);
@@ -200,15 +160,13 @@ async function addRecipe(request, response){
     } catch (error){
         response.status(500).json({
             message: 'A ocurrido un error interno ',
-            data: error
+            data: error.message
         })
     }
-
 }
 
 module.exports = {
     getRecipes,
-    getRecipesName,
     getRecipesId,
     addRecipe
 }

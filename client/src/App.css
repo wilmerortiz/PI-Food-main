@@ -1,7 +1,6 @@
 /*-------------
  	General
 -------------*/
-
 *{
   margin: 0;
   padding: 0;
@@ -14,6 +13,11 @@ html{
   background: #ecf0f1;
   /*font: normal 16px sans-serif;*/
   color: #555;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: 'Pacifico', cursive;
+  font-weight: 500;
 }
 
 ul, nav{
@@ -60,6 +64,19 @@ section{
   justify-content: center;
   padding: 90px 100px;
   padding-bottom: 20px;
+}
+
+.header-logo{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.logo{
+  width: 60px;
+  background: #ecf0f1;
+  border-radius: 12px;
+  margin-right: 10px;
 }
 
 /*Validate*/
@@ -134,7 +151,7 @@ header{
   justify-content: space-between;
   align-items: center;
   color: #fff;
-  padding: 20px 100px ;
+  padding: 5px 100px ;
   background: #282c34;
   opacity: 0.9;
   box-shadow: 0 5px 15px -5px rgba(0,0,0,0.9);
@@ -142,8 +159,10 @@ header{
 input{
   border-radius: 12px;
 }
-header h2{
-  font-family: 'Quicksand', sans-serif;
+
+header h2 a{
+  font-family: 'Pacifico', cursive !important;
+  font-size: 30px;
 }
 
 header nav{
@@ -163,36 +182,90 @@ header nav li:last-child{
 }
 
 /*----------------
- 	Container
+ 	Container, side-bar
 ----------------*/
+.btn-float-rb{
+  position: fixed !important;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  background: #00CDAE;
+  color: #ecf0f1;
+  width: 75px;
+  height: 75px;
+  box-shadow: 0 5px 15px -5px rgba(0,0,0,0.5);
+  border-radius: 50%;
+}
+
 .container{
   display: flex;
-  margin-top: 80px;
+  margin-top: 75px;
 }
 
 .container .side-bar{
   position: fixed;
   margin-top: -10px;
   width: 250px;
+  max-width: 250px;
+  min-width: 250px;
   height: calc(100vh - 70px);
   min-height: calc(100vh - 70px);
   max-height: calc(100vh - 70px);
-  max-width: 250px;
-  min-width: 250px;
+  z-index: 11;
   background: #FFF;
   margin-right: 5px;
+  padding: 10px;
+  overflow-y: auto;
+  transition: transform 0.5s;
+  transform: translateX(-0%);
 }
 
-.side-bar{
-  padding: 2px;
-  overflow-y: auto;
+.side-bar.active{
+  transform: translateX(-200%);
+}
+
+.showmenu{
+  visibility: visible;
+  position: fixed;
+  top: 75px;
+  left: 5px;
+  padding: 8px;
+  font-size: 20px;
+  border: 0;
+  border-radius: 12px;
+  background: #00CDAE;
+  color: #f7f7f7;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 5px 15px -5px rgba(0,0,0,0.5);
+}
+
+.nav-header{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-bottom: 1px solid #848282;
+}
+
+.nav-header button{
+  font-size: 20px;
+  display: flex;
+  justify-content: right;
+  padding: 10px;
+  color: #ffffff;
+  background: #1CC2AB;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
 }
 
 .side-bar div h3{
   color: #0a483e;
   padding: 10px 0px;
   text-align: center;
-  border-bottom: solid #848282;
   border-width: 1px;
 }
 
@@ -220,7 +293,7 @@ header nav li:last-child{
   width: 100%;
 }
 
-.side-bar div ul li label{
+.side-bar ul li label{
   display: flex;
   padding: 10px 10px;
   cursor: pointer;
@@ -230,13 +303,13 @@ header nav li:last-child{
   transition: all .3s;
 }
 
-.side-bar div ul li label:hover{
+.side-bar ul li label:hover{
   background: #1CC2AB;
   color: #0a483e;
   border-radius: 12px;
 }
 
-.side-bar div ul li.active{
+.side-bar ul li.active{
   background: #1CC2AB;
   color: #0a483e !important;
   border-radius: 12px;
@@ -245,12 +318,22 @@ header nav li:last-child{
 .content{
   margin-left: 250px;
   padding: 0 5px;
+  transition: 0.5s;
+}
+
+.content.active{
+  margin-left: 0px;
+  transition: 0.5s;
+
 }
 
 /*----------------
  	Search y filter
 ----------------*/
-.search, .filter{
+.search{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #FFFFFF;
   padding: 5px;
   margin: 5px;
@@ -258,7 +341,7 @@ header nav li:last-child{
   box-shadow: 0 5px 15px -5px rgba(0,0,0,0.5);
 }
 
-.search form input, .filter form select{
+.search input{
   height: 45px;
   padding: 0 20px;
   font-size: 18px;
@@ -268,14 +351,7 @@ header nav li:last-child{
   background: #FFF;
 }
 
-.filter form select::-ms-expand {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  text-indent: 1px;
-  text-overflow: '';
-}
-
-.search form button{
+.search button{
   height: 45px;
   width: 45px;
   border: 0;
@@ -295,6 +371,9 @@ header nav li:last-child{
  	items per page
 ----------------*/
 .items-pages{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #ffffff;
   padding: 3px 15px;
   margin: 0 5px;
@@ -314,6 +393,13 @@ header nav li:last-child{
 }
 
 /*----------------
+ 	Actions
+----------------*/
+.actions{
+  width: 100%;
+}
+
+/*----------------
  	Paginate
 ----------------*/
 /*
@@ -327,6 +413,8 @@ header nav li:last-child{
 .paginate{
   list-style: none;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .paginate li{
@@ -375,8 +463,16 @@ header nav li a{
   border-radius: 12px;
   box-shadow: 0 5px 15px -5px rgba(0,0,0,0.9);
 }
+.order{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 div.order button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 0;
   background: #00CDAE;
   color: #FFF;
@@ -451,7 +547,7 @@ div.order button:hover{
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 99;
+  z-index: 9;
   position: relative;
 }
 
@@ -526,6 +622,8 @@ div.order button:hover{
 /*---------------------
  	DETAILS
 ---------------------*/
+
+
 .recipeDetails div.detail{
   width: 50%;
 }
@@ -549,7 +647,6 @@ div.order button:hover{
 }
 
 .chips-sm{
-  display: -webkit-inline-box;
   background: #1CC2AB;
   color: #184D45;
   padding: 5px 10px;
@@ -558,6 +655,11 @@ div.order button:hover{
   font-weight: 600;
   font-size: 12px;
   box-shadow: 0 5px 15px -5px rgba(0,0,0,0.3);
+  /*
+  overflow: hidden;
+  white-space: nowrap;
+   */
+  display: inline-block;
 }
 
 .detail-summary, .detail-summary{
@@ -569,8 +671,8 @@ div.order button:hover{
 
 .detail-summary p, .detail-summary p{
   text-align: justify;
+  line-height: 1.9;
 }
-
 
 /*---------------------
  	FORMULARIOS
@@ -1074,6 +1176,9 @@ input[type="range"]::-webkit-slider-thumb {
   font-family: Roboto, sans-serif;
   font-weight: 400;
   z-index: 999;
+  text-align: center;
+  white-space: nowrap;
+
 }
 [data-md-tooltip]:hover:before {
   transform: translateX(-50%) scale(1);

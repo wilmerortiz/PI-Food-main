@@ -1,11 +1,12 @@
 import React, {useEffect, useState, useMemo} from "react";
 import {connect} from "react-redux";
+import { Link } from 'react-router-dom';
 import Recipes from "./Recipes";
 import useSorData from "./useSorData"
-import {getRecipesAll, getRecipes, addRecipeFavorite } from "../actions"
+import {getRecipesAll, getRecipes } from "../actions"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Loading from "./Loading";
-import Diets from "./NavDiets";
+import NavDiets from "./NavDiets";
 import EmptyData from "./EmptyData";
 import Paginate from "./Paginate";
 
@@ -65,6 +66,8 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading}) => {
     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(3);//Limite de numero por pagina
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
+    const [sidebar, setSidebar] = useState(false);
+
     const handleClick = (e) => {
         setCurrentPage(Number(e.target.id))
     }
@@ -102,7 +105,9 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading}) => {
     }
 
     useEffect(() => {
-       getRecipesAll();
+        //if(listRecipes.length === 0 ){
+            getRecipesAll();
+        //}
     }, []);
 
     const handleNext = () => {
@@ -138,34 +143,38 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading}) => {
 
     return(
         <div className="container">
-            <div className="side-bar">
-                <Diets/>
-            </div>
-            <div className="content">
+            <Link to="/recipes/create-recipe" className={`btn-float-rb md-tooltip--left`} data-md-tooltip="Create Recipe">
+                <FontAwesomeIcon icon="fa-solid fa-plus" size="2x"/>
+            </Link>
+
+            <NavDiets sidebar={sidebar} setSidebar={setSidebar}/>
+
+            <div className={sidebar ? 'content active' : 'content'}>
                 <div className="actions">
-                    <div className="search">
-                        <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
+                        <div className="search">
                             <input type="search" placeholder="Search" name="name" value={recipe.name} onChange={handleChange}/>
                             <button type="submit" className="btn">
                                 <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" size="lg"/>
                             </button>
-                        </form>
-                    </div>
-                        <form>
-                            <div className="items-pages">
-                                <label htmlFor="itemsPorPage">Show </label>
-                                <select name="itemsPorPage" defaultValue={itemsPorPage} id="itemsPorPage"
-                                        onChange={changeLimit}>
-                                    <option value="1">1</option>
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option value="20">20</option>
-                                    <option value="50">50</option>
-                                </select>
-                                <label htmlFor="itemsPorPage"> entries</label>
-                            </div>
-                        </form>
+                        </div>
+                    </form>
+                    <form>
+                        <div className="items-pages">
+                            <label htmlFor="itemsPorPage">Show </label>
+                            <select name="itemsPorPage" defaultValue={itemsPorPage} id="itemsPorPage"
+                                    onChange={changeLimit}>
+                                <option value="1">1</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                            <label htmlFor="itemsPorPage"> entries</label>
+                        </div>
+                    </form>
+
                     <Paginate
                         handlePrev={handlePrev}
                         pageDecrement={pageDecrement}
@@ -184,14 +193,14 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading}) => {
                         </button>
                         <button type="button" data-md-tooltip="Order Score"
                                 onClick={() => requestSort("spoonacularScore")}
-                                className={`md-tooltip ${getClassNamesFor("title")}`}>
+                                className={`md-tooltip ${getClassNamesFor("spoonacularScore")}`}>
                             <FontAwesomeIcon icon="fa-solid fa-arrow-up-1-9" size="lg"/> &nbsp;
                             <FontAwesomeIcon icon="fa-solid fa-arrow-down-9-1" size="lg"/>
                         </button>
                     </div>
                 </div>
                 <div style={{paddingTop:"0"}}>
-                    {loading ? <Loading/> : currentItems?.length === 0 ? <EmptyData/> :<div className="reviews">{currentItems?.map( rc =>
+                    {loading ? <Loading/> : currentItems.length === 0 ? <EmptyData/> : <div className="reviews">{currentItems?.map( rc =>
                         <Recipes
                             key={rc.id}
                             id={rc.id}
@@ -211,8 +220,8 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading}) => {
 
 function mapStateToProps(state) {
     return {
-        listRecipes: state.recipesLoaded,
-        loading: state.loading
+        listRecipes: state.recipe.recipesLoaded,
+        loading: state.recipe.loading,
     };
 }
 

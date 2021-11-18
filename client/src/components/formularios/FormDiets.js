@@ -87,7 +87,7 @@ const FormDiets = ({closeModal, addDietDB, getDietsAll, modalClose, opacity, vis
 
 function mapStateToProps(state){
     return {
-        listDiets: state.dietsLoaded
+        listDiets: state.recipe.dietsLoaded
     };
 }
 

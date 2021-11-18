@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import parse from 'html-react-parser';
 import { getRecipeDetail } from '../actions';
 import Loading from "./Loading";
-
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const DetailsRecipe = ({getRecipeDetail, recipe}) => {
     const { search } = useLocation();
@@ -39,19 +39,20 @@ const DetailsRecipe = ({getRecipeDetail, recipe}) => {
                 </div>
                 <div className="detail detail-summary mb-2">
                     <h3>Resumen del plato</h3>
-                    <p>{recipe.summary}</p>
+                    <p>{parse(recipe.summary)}</p>
                 </div>
                 <div className=" detail detail-punctuation mb-1">
                     <h3 className="mb-1">Puntuación</h3>
-                    <span className="chips">{recipe.spoonacularScore}</span>
+                    <span className="chips"><FontAwesomeIcon icon="fa-solid fa-star" size={`lg`}/> {recipe.spoonacularScore}</span>
                 </div>
                 <div className="detail detail-nivel-saludable mb-2">
                     <h3 className="mb-1">Nivel de comida saludable</h3>
-                    <span className="chips">{recipe.healthScore}</span>
+                    <span className="chips"><FontAwesomeIcon icon="fa-brands fa-gratipay" size={`lg`}/> {recipe.healthScore}</span>
                 </div>
                 <div className="detail detail-summary mb-1">
                     <h3>Instrucciones</h3>
-                    <p>{parse(recipe.instructions.replace(/\./g, '.<br /><br />'))}</p>
+                    <p>{/*parse(recipe?.instructions.replace(/\./g, '.<br /><br />'))*/}</p>
+                    <p>{recipe.instructions && recipe.instructions}</p>
                 </div>
             </section>}
         </>
@@ -61,8 +62,8 @@ const DetailsRecipe = ({getRecipeDetail, recipe}) => {
 
 function mapStateToProps(state) {
     return {
-        recipe: state.recipeDetail,
-        loading: state.loading,
+        recipe: state.recipe.recipeDetail,
+        loading: state.recipe.loading,
 
 };
 }

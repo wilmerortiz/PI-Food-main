@@ -16,11 +16,13 @@ const Recipes = ({id, title, img, dishTypes, diets, origin, score}) => {
             </div>*/}
             <div className="diets mb-1">
                 <h5>Diets Types</h5>
-                {diets?.map( dt => <span key={dt} className="chips-sm">{dt}</span>)}
+                <div>
+                    {diets?.map( dt => <span key={dt} className="chips-sm">{dt}</span>)}
+                </div>
             </div>
             <div className="score">
                 <h5>Score</h5>
-                <span className="chips-sm">{score}</span>
+                <span className="chips-sm"><FontAwesomeIcon icon="fa-solid fa-star" size={`lg`}/> {score}</span>
             </div>
             <div className={`card-button`}>
                 <Link to={`/recipes/details/${id}?origin=${origin}`}>

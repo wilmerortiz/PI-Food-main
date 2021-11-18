@@ -1,0 +1,14 @@
+.card-login{
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+}
+
+.profile-img-card{
+    display: flex;
+
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+}

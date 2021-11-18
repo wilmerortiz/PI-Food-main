@@ -34,7 +34,7 @@ async function createDiet(request, response){
         }
     } catch (error){
         response.status(500).json({
-            message: `An internal error has occurred ${error}`,
+            message: `An internal error has occurred ${error.message}`,
             open: true,
             error: true
         })

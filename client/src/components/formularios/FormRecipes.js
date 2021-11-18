@@ -18,7 +18,7 @@ const FormRecipes = ({getDietsAll, addRecipeDB, listDiets, getRecipesAll, respon
 
     const [errors, setErrors] = React.useState({
         image: 'URL Picture is required',
-        title: 'Title is required',
+        name: 'Title is required',
         summary: 'Summary is required'
     });
 
@@ -103,13 +103,13 @@ const FormRecipes = ({getDietsAll, addRecipeDB, listDiets, getRecipesAll, respon
                             <p className="validate-danger"><FontAwesomeIcon icon="fa-solid fa-triangle-exclamation" /> {errors.image}</p>
                         )}
                     </div>
-                    <div className={`${errors.title && 'input-danger'} wrap-input bg1`}>
+                    <div className={`${errors.name && 'input-danger'} wrap-input bg1`}>
                         <label htmlFor="title" className="label-input">Title</label>
-                        <input type="text" name="title" className="input" id="title"
-                               value={recipe.title}
+                        <input type="text" name="name" className="input" id="title"
+                               value={recipe.name}
                                onChange={handleChange}/>
-                        {errors.title && (
-                            <p className="validate-danger"><FontAwesomeIcon icon="fa-solid fa-triangle-exclamation" /> {errors.title}</p>
+                        {errors.name && (
+                            <p className="validate-danger"><FontAwesomeIcon icon="fa-solid fa-triangle-exclamation" /> {errors.name}</p>
                         )}
                     </div>
                     <div className={`${errors.summary && 'input-danger'} wrap-input bg1`}>
@@ -176,9 +176,9 @@ const FormRecipes = ({getDietsAll, addRecipeDB, listDiets, getRecipesAll, respon
 
 function mapStateToProps(state) {
     return {
-        listDiets: state.dietsLoaded,
-        responses: state.$responses,
-        loading: state.loading
+        listDiets: state.recipe.dietsLoaded,
+        responses: state.recipe.$responses,
+        loading: state.recipe.loading
     };
 }
 
