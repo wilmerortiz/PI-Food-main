@@ -1,9 +1,15 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, BIGINT} = require('sequelize');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
     // defino el modelo
     sequelize.define('recipe', {
+        id: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            primaryKey: true,
+            unique: true
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -30,9 +36,14 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        dishTypes:
-            {
-                type: DataTypes.ARRAY(DataTypes.STRING)
-            }
+        dishTypes: {
+            type: DataTypes.ARRAY(DataTypes.STRING)
+        },
+        readyInMinutes: {
+            type: DataTypes.DECIMAL({length: 6, decimals: 2})
+        },
+        servings: {
+            type: DataTypes.INTEGER
+        }
     });
 };

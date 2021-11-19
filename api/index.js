@@ -30,12 +30,36 @@ conn.sync({ force: false }).then(() => {
     server.listen(3001, () => {
         console.log('%s listening at 3001'); // eslint-disable-line no-console
 
-        initial()
+        //initialRoles();
+        //initialTypeDiets();
+        //initialRecipes();
 
-        //console.log(API_KEY)
+    });
 
-        /*Pre cargamos las dietas*/
-        /*
+    function initialRoles() {
+        Role.findOrCreate({
+            where: {
+                name: "user",
+                description: "usuario normal"
+            }
+        });
+
+        Role.findOrCreate({
+            where: {
+                name: "moderator",
+                description: "usuario moderador"
+            }
+        });
+
+        Role.findOrCreate({
+            where: {
+                name: "admin",
+                description: "usuario administrador"
+            }
+        });
+    }
+
+    function initialTypeDiets(){
         let $saveData = [];
         getDietsData.map(dt => {
             let $data = Diet.findOrCreate({
@@ -50,41 +74,12 @@ conn.sync({ force: false }).then(() => {
 
         Promise.all($saveData)
             .then(res => {
-                console.log("diets precargadas");
+                console.log("Tipo de diets pre cargadas");
             });
+    }
 
-        */
+    function initialRecipes(){
 
-        /*Cargamos las recetas*/
-        /*
-        let dietas = [];
-        try {
-            const types = Diet.findAll({
-                order: [['id', 'DESC']]
-            });
-            types.then(function(response){
-                let array =  ['paleo', 'primal', 'vegan']
-                let types = [];
-                response.map(td => {
-                    dietas.push(
-                        {id: td.id, name: td.name.toLowerCase()}
-                    )
-                })
-
-                dietas.filter( function (tag) {
-                    if(array.includes(tag.name)){
-                        types.push(tag.id)
-                    }
-                });
-
-            })
-        }catch (error){
-            console.log(error)
-        }
-
-         */
-
-        /*
         let url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true`;
         const axios = require("axios").default;
         let options = {
@@ -92,8 +87,7 @@ conn.sync({ force: false }).then(() => {
             url: url,
             params: {
                 number: '100',
-                instructionsRequired: true,
-                maxReadyTime: true
+                instructionsRequired: true
             }
         };
 
@@ -123,22 +117,28 @@ conn.sync({ force: false }).then(() => {
                                 types.push(tag.id)
                             }
                         });
-                        //console.log(types);
-                       let newRecipe = Recipe.create({
-                            name : rc.title,
-                            image : rc.image,
-                            summary: rc.summary,
-                            spoonacularScore: rc.spoonacularScore,
-                            healthScore: rc.healthScore,
-                            instructions: rc.instructions,
-                            origin: 'LOCAL',
-                            dishTypes : rc.dishTypes
-                       })
 
-                        newRecipe.then(function (res){
-                            res.addDiets(types);
-                            $saveData.push(newRecipe)
-                        })
+                        setTimeout( function (){
+                            let newRecipe = Recipe.create({
+                                id: Date.now()+1,
+                                name : rc.title,
+                                image : rc.image,
+                                summary: rc.summary,
+                                spoonacularScore: rc.spoonacularScore,
+                                healthScore: rc.healthScore,
+                                instructions: rc.instructions,
+                                origin: 'LOCAL',
+                                dishTypes : rc.dishTypes,
+                                readyInMinutes: rc.readyInMinutes,
+                                servings: rc.servings
+                            })
+
+                            newRecipe.then(function (res){
+                                res.addDiets(types);
+                                $saveData.push(newRecipe)
+                            })
+                        }, 2)
+
                     })
 
                     Promise.all($saveData)
@@ -152,30 +152,6 @@ conn.sync({ force: false }).then(() => {
         }).catch(function (error) {
             console.error(error.message);
         });
-
-        */
-    });
-
-    function initial() {
-        Role.findOrCreate({
-            where: {
-                name: "user",
-                description: "usuario normal"
-            }
-        });
-
-        Role.findOrCreate({
-            where: {
-                name: "moderator",
-                description: "usuario moderador"
-            }
-        });
-
-        Role.findOrCreate({
-            where: {
-                name: "admin",
-                description: "usuario administrador"
-            }
-        });
     }
+
 });

@@ -29,8 +29,6 @@ const getRecipesAll = () => {
     return function(dispatch) {
         return axios.get(url)
             .then(function(response){
-                //console.log(response.data)
-            //.then(({ data }) => {
                 dispatch({ type: GET_RECIPES_ALL, payload: response.data });
             });
     };

@@ -136,6 +136,30 @@ ul.grid{
   color: #ff0101;
 }
 
+.div-alert{
+  text-align: center;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px -5px rgba(0,0,0,0.4);
+}
+
+.alert.alert-success{
+  background: #1CC2AB;
+  padding: 20px 15px;
+  border-radius: 12px;
+  color: #0a483e;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.alert.alert-danger{
+  background: #FF7070;
+  padding: 20px 15px;
+  border-radius: 12px;
+  color: #a41111;
+  font-weight: bold;
+  font-size: 20px;
+}
 /*-------------
  	Header
 -------------*/
@@ -158,6 +182,7 @@ header{
 }
 input{
   border-radius: 12px;
+  font-weight: bold;
 }
 
 header h2 a{
@@ -191,13 +216,13 @@ header nav li:last-child{
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
   background: #00CDAE;
   color: #ecf0f1;
   width: 75px;
   height: 75px;
-  box-shadow: 0 5px 15px -5px rgba(0,0,0,0.5);
+  box-shadow: 0 5px 15px -5px rgba(0,0,0,0.9);
   border-radius: 50%;
+  z-index: 99999;
 }
 
 .container{
@@ -571,14 +596,43 @@ div.order button:hover{
   box-shadow: 0 5px 15px -5px rgba(0,0,0,0.5);
   opacity: 0.9;
   transition: all .3s;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  /*justify-content: flex-end;*/
+}
+.card-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 280px;
 }
 .card:hover{
 /*  filter: opacity(0.9);*/
-  box-shadow: 0 5px 15px -5px rgba(0,0,0,0.9);
+  box-shadow: 0 10px 15px 5px rgba(0, 0, 0,0.7);
 }
 
-.card:focus {
-  outline: 0;
+.zoom {
+  transition: 0.5s ease;
+  -moz-transition: 0.5s ease;
+  /* Firefox */
+  -webkit-transition: 0.5s ease;
+  /* Chrome - Safari */
+  -o-transition: 0.5s ease;
+  /* Opera */
+
+}
+.zoom:hover {
+  z-index: 9999;
+  transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  /* Firefox */
+  -webkit-transform: scale(1.05);
+  /* Chrome - Safari */
+  -o-transform: scale(1.05);
+  /* Opera */
+  -ms-transform: scale(1.05);
+  /* IE9 */
 }
 
 .card .card-image{
@@ -597,10 +651,11 @@ div.order button:hover{
 }
 
 .card .card-button{
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
   margin-bottom: 15px;
   display: flex;
   justify-content: space-evenly;
+  align-items: flex-end;
 }
 
 .card .card-button a, .card .card-button button{
@@ -610,7 +665,7 @@ div.order button:hover{
   border-radius: 12px;
   color: #FFF;
   box-shadow: 0 5px 15px -5px rgba(0,0,0,0.4);
-  justify-content: flex-end;
+
 }
 
 .card .card-button button{
@@ -619,10 +674,14 @@ div.order button:hover{
   font-size: 15px;
 }
 
+.card .score{
+  display: flex;
+  justify-content: space-evenly;
+}
+
 /*---------------------
  	DETAILS
 ---------------------*/
-
 
 .recipeDetails div.detail{
   width: 50%;
@@ -841,9 +900,7 @@ button.btn-form:hover{
   padding-bottom: 5px;
   margin-bottom: 10px;
 }
-.punctuation{
-  display: flex;
-}
+
 .input-radio, .input-checkbox {
   display: none;
 }
@@ -856,10 +913,6 @@ button.btn-form:hover{
   font-size: 18px;
   color: #555555;
   line-height: 1.2;
-}
-
-.label-radio svg{
-  color: #FFD253;
 }
 
 .label-radio::before, .label-checkbox::before{

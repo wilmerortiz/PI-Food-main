@@ -1,8 +1,16 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import ShallowRenderer from 'react-test-renderer/shallow';
+import App from "./App";
+describe("<App/>", () => {
+  const renderer = new ShallowRenderer();
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+  renderer.render(<App />);
+  const result = renderer.getRenderOutput();
+  it('El primer Route debe cambiar la ruta hacia "/".', () => {
+    expect(result.props.children.props.children[0].props.path).toEqual('/');
+  });
+
+  it('El segundo Route debe cambiar la ruta hacia "/home".', () => {
+    expect(result.props.children.props.children[1].props.path).toEqual('/home');
+  });
+
+})

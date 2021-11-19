@@ -25,7 +25,7 @@ async function getRecipes(request, response){
             };
 
             const recipe = await Recipe.findAll({
-                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes'],
+                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings'],
                 order: [['id', 'DESC']],
                 include: {
                     model: Diet,
@@ -64,7 +64,7 @@ async function getRecipes(request, response){
             };
 
             const recipe = await Recipe.findAll({
-                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes'],
+                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings'],
                 where: {
                     name: {
                         [Op.iLike] : `%${nombre}%`
@@ -103,7 +103,7 @@ async function getRecipes(request, response){
 async function getRecipesId(request, response){
     const {idReceta} = request.params
     const {origin} = request.query
-    let url = `https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${API_KEY}&includeNutrition=false`
+    let url = `https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${API_KEY}`
     try{
         if(origin === 'API'){
             let axios = require("axios").default;
@@ -120,7 +120,7 @@ async function getRecipesId(request, response){
             });
         }else{
             const recipe = await Recipe.findByPk(idReceta, {
-                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes'],
+                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings'],
                 include: Diet
             });
 
@@ -135,10 +135,11 @@ async function getRecipesId(request, response){
 
 async function addRecipe(request, response){
     //console.log(request.body);
-    const {name, image, summary, spoonacularScore, healthScore, instructions, origin, dishTypes, types} = request.body
+    const {name, image, summary, spoonacularScore, healthScore, instructions, origin, dishTypes, readyInMinutes, servings, types} = request.body
 
     try {
         let newRecipe = await Recipe.create({
+            id: Date.now(),
             name,
             image,
             summary,
@@ -146,21 +147,31 @@ async function addRecipe(request, response){
             healthScore,
             instructions,
             origin,
-            dishTypes
+            dishTypes,
+            readyInMinutes,
+            servings
         })
 
         await newRecipe.addDiets(types);
 
         if(newRecipe){
             response.json({
-                message: 'Receta creado satisfactoriamente',
-                data: newRecipe
+                message: 'Recipe successfully created',
+                open: true,
+                error: false
+            })
+        }else{
+            response.json({
+                message: 'Error, recipe could not be created',
+                open: true,
+                error: true
             })
         }
     } catch (error){
         response.status(500).json({
-            message: 'A ocurrido un error interno ',
-            data: error.message
+            message: `An internal error has occurred: ${error.message}`,
+            open: true,
+            error: true
         })
     }
 }

@@ -29,24 +29,28 @@ const DetailsRecipe = ({getRecipeDetail, recipe}) => {
                 <div className="detail detail-name mb-1">
                     <h1>{recipe.title}</h1>
                 </div>
+                <div className={`mb-2`}>
+                    <h3 className={`mb-1`}>Ready in minutes</h3>
+                    <span className="chips"><FontAwesomeIcon icon="fa-regular fa-clock" /> {recipe.readyInMinutes}</span>
+                </div>
                 <div className="detail detail-dishTypes mb-2">
-                    <h3 className="mb-1">Tipo de Platos</h3>
+                    <h3 className="mb-1">Type Dishes</h3>
                     {recipe.dishTypes.map( tp => <span key={tp} className="chips">{tp}</span>)}
                 </div>
                 <div className="detail detail-diets mb-2">
-                    <h3 className="mb-1">Tipo de Dietas</h3>
+                    <h3 className="mb-1">Type Diets</h3>
                     {!recipe.origin ? recipe.diets.map( dt => <span key={dt} className="chips">{dt}</span>) : recipe.diets.map( dt => <span key={dt.id} className="chips">{dt.name}</span>)}
                 </div>
                 <div className="detail detail-summary mb-2">
-                    <h3>Resumen del plato</h3>
+                    <h3>Summary</h3>
                     <p>{parse(recipe.summary)}</p>
                 </div>
                 <div className=" detail detail-punctuation mb-1">
-                    <h3 className="mb-1">Puntuación</h3>
+                    <h3 className="mb-1">Score</h3>
                     <span className="chips"><FontAwesomeIcon icon="fa-solid fa-star" size={`lg`}/> {recipe.spoonacularScore}</span>
                 </div>
                 <div className="detail detail-nivel-saludable mb-2">
-                    <h3 className="mb-1">Nivel de comida saludable</h3>
+                    <h3 className="mb-1">Health Score</h3>
                     <span className="chips"><FontAwesomeIcon icon="fa-brands fa-gratipay" size={`lg`}/> {recipe.healthScore}</span>
                 </div>
                 <div className="detail detail-summary mb-1">
@@ -56,7 +60,6 @@ const DetailsRecipe = ({getRecipeDetail, recipe}) => {
                 </div>
             </section>}
         </>
-
     )
 }
 
@@ -64,8 +67,7 @@ function mapStateToProps(state) {
     return {
         recipe: state.recipe.recipeDetail,
         loading: state.recipe.loading,
-
-};
+    };
 }
 
 function mapDispatchToProps(dispatch) {

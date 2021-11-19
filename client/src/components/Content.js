@@ -60,7 +60,7 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading}) => {
 
     /** Paginate **/
     const [currentPage, setCurrentPage] = useState(1)
-    const [itemsPorPage, setItemsPorPage] = useState(10)//Items por página
+    const [itemsPorPage, setItemsPorPage] = useState(9)//Items por página
 
     const [pageNumberLimit, setPageNumberLimit] = useState(3);
     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(3);//Limite de numero por pagina
@@ -164,8 +164,8 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading}) => {
                             <label htmlFor="itemsPorPage">Show </label>
                             <select name="itemsPorPage" defaultValue={itemsPorPage} id="itemsPorPage"
                                     onChange={changeLimit}>
-                                <option value="1">1</option>
                                 <option value="5">5</option>
+                                <option value="9">9</option>
                                 <option value="10">10</option>
                                 <option value="15">15</option>
                                 <option value="20">20</option>
@@ -185,7 +185,7 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading}) => {
                         pages={pages}/>
 
                     <div className="order">
-                        <button type="button" data-md-tooltip="Order Upward"
+                        <button type="button" data-md-tooltip="Order Desc/Asc"
                                 onClick={() => requestSort("title")}
                                 className={`md-tooltip ${getClassNamesFor("title")}`}>
                             <FontAwesomeIcon icon="fa-solid fa-arrow-up-a-z" size="lg"/> &nbsp;
@@ -210,6 +210,8 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading}) => {
                             diets={ rc.origin ? rc.diets?.map(diet => [diet.name]) : rc.diets}
                             origin={rc.origin ? rc.origin : 'API'}
                             score={rc.spoonacularScore}
+                            readyInMinutes={rc.readyInMinutes}
+                            servings={rc.servings}
                         />
                         )}</div>}
                 </div>

@@ -13,7 +13,8 @@ const FormRecipes = ({getDietsAll, addRecipeDB, listDiets, getRecipesAll, respon
         types: [],
         dishTypes: [],
         spoonacularScore: 0,
-        healthScore : 0
+        healthScore : 0,
+        readyInMinutes: 0
     });
 
     const [errors, setErrors] = React.useState({
@@ -83,7 +84,7 @@ const FormRecipes = ({getDietsAll, addRecipeDB, listDiets, getRecipesAll, respon
 
     return(
         <>
-            {responses.open && <ModalMessage message={responses.message} error={responses.error} />}
+            {responses.open && <ModalMessage message={responses.message} error={responses.error} opacity={1} visibility="visible"/>}
             {/*openModal && <FormDiets opacity={1} visibility="visible" closeModal={setOpenModal} modalClose={openModal ? '' : 'modalClose'} />*/}
             <FormDiets opacity={openModal ? 1 : 0} visibility={openModal ? 'visible' : 'hidden'} closeModal={setOpenModal} modalClose={openModal ? '' : 'modalClose'} />
             <section>
@@ -104,8 +105,8 @@ const FormRecipes = ({getDietsAll, addRecipeDB, listDiets, getRecipesAll, respon
                         )}
                     </div>
                     <div className={`${errors.name && 'input-danger'} wrap-input bg1`}>
-                        <label htmlFor="title" className="label-input">Title</label>
-                        <input type="text" name="name" className="input" id="title"
+                        <label htmlFor="name" className="label-input">Name</label>
+                        <input type="text" name="name" className="input" id="name"
                                value={recipe.name}
                                onChange={handleChange}/>
                         {errors.name && (
@@ -120,6 +121,13 @@ const FormRecipes = ({getDietsAll, addRecipeDB, listDiets, getRecipesAll, respon
                         {errors.summary && (
                             <p className="validate-danger"><FontAwesomeIcon icon="fa-solid fa-triangle-exclamation" /> {errors.summary}</p>
                         )}
+                    </div>
+
+                    <div className={`wrap-input bg1`}>
+                        <label htmlFor="readyInMinutes" className="label-input">Ready in minutes</label>
+                        <input name="readyInMinutes" className="input" id="readyInMinutes"
+                                  value={recipe.readyInMinutes}
+                                  onChange={handleChange}/>
                     </div>
 
                     <div className="wrap-form-range mb-1">

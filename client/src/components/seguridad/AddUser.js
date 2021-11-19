@@ -8,6 +8,7 @@ import { isEmail } from "validator";
 
 import { register } from "../../actions/auth";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import ModalMessage from "../Flash/modalMessage";
 
 const required = (value) => {
     if (!value) {
@@ -142,7 +143,7 @@ const AddUser = () => {
                             </div>
                         </div>)}
                     {message && (
-                        <div className="form-group">
+                        <div className="div-alert">
                             <div className={ successful ? "alert alert-success" : "alert alert-danger" } role="alert">
                                 {message}
                             </div>

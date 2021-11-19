@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {connect} from "react-redux";
 import {closeMessage} from "../../actions";
 
-const ModalMessage = ({message, error, closeMessage}) => {
+const ModalMessage = ({message, error, opacity, visibility, closeMessage}) => {
     const obj = {
         open: false,
         message: '',
@@ -11,7 +11,7 @@ const ModalMessage = ({message, error, closeMessage}) => {
     }
 
     return(
-        <div className="modalBackGround">
+        <div className="modalBackGround" style={{opacity: opacity, visibility: visibility}}>
             <div className="modalContainer">
                 <div className="modalTitleBtn">
                     <button onClick={() => closeMessage(obj)}>

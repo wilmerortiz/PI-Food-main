@@ -1,7 +1,5 @@
-
 const initialState = {
     loading: true,
-    recipesFavourites: [],
     recipesLoaded: [],
     searchResults: [],
     filterResults: [],
@@ -14,7 +12,7 @@ const initialState = {
     }
 };
 
-export default function (state = initialState, action) {
+export default function rootReducers (state = initialState, action) {
     switch (action.type){
         case "GET_MESSAGE":
             return {

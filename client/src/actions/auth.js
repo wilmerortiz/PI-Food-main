@@ -1,4 +1,5 @@
 import {
+    GET_USERS,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     LOGIN_SUCCESS,
@@ -8,6 +9,43 @@ import {
 } from "./types";
 
 import AuthService from "../services/auth.service";
+
+export const getUsers = () => (dispatch) => {
+    return AuthService.getUsers().then(
+        (response) => {
+            dispatch({
+                type: GET_USERS,
+            });
+            //console.log(response)
+            dispatch({
+
+                type: GET_USERS,
+                payload: response,
+            });
+
+            return Promise.resolve();
+        },
+        (error) => {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            dispatch({
+                type: REGISTER_FAIL,
+            });
+
+            dispatch({
+                type: SET_MESSAGE,
+                payload: message,
+            });
+
+            return Promise.reject();
+        }
+    );
+};
 
 export const register = (user) => (dispatch) => {
     return AuthService.register(user).then(

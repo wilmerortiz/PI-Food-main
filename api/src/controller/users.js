@@ -35,7 +35,7 @@ async function register(request, response){
 
         if(newUser){
             response.json({
-                message: 'user successfully created',
+                message: 'User successfully created',
                 open: true,
                 error: false
             })
