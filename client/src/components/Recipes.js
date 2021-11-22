@@ -1,24 +1,41 @@
-import React, {useState, useEffect} from "react";
-import {Link} from "react-router-dom";
+import React, {useState} from "react";
+import {Link, Redirect} from "react-router-dom";
 import {connect, useDispatch, useSelector} from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { registerFavorite } from "../actions/auth"
 import {Report} from "notiflix/build/notiflix-report-aio";
 import { clearMessage } from "../actions/message";
 
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
+//import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
 const Recipes = ({id, title, img, dishTypes, diets, origin, score, readyInMinutes, servings, registerFavorite}) => {
 
     const { user: currentUser } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
     const { message } = useSelector(state => state.message);
+    //const { isLoggedIn } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
     const addFavorites = (recipeId) => {
+        setLoading(true);
+        if (!currentUser) {
+            setLoading(false);
+            Report.failure('WARNING', 'Inicie sesión para agregar a favoritos', 'OK', function cb() {
+                return <Redirect to="/users/login" />;
+            });
+
+            return;
+        }
+
         let datos = {userId: currentUser.id, recipeId: recipeId}
-        //console.log(datos);
+
         registerFavorite(datos)
+            .then(() => {
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+            });
     }
 
     return(
@@ -60,10 +77,10 @@ const Recipes = ({id, title, img, dishTypes, diets, origin, score, readyInMinute
                         <FontAwesomeIcon icon="fa-solid fa-circle-info" size="lg" /> Details
                     </Link>
                     <button onClick={() => addFavorites(id)} disabled={loading}>
-                        {loading && (
-                            <FontAwesomeIcon icon="fa-solid fa-circle-notch" />
-                        )}
-                        <FontAwesomeIcon icon="fa-solid fa-heart" size="lg" /> Favorite
+                        {loading ? (
+                            <FontAwesomeIcon icon="fa-solid fa-circle-notch" size="lg" />
+                        ) : (<FontAwesomeIcon icon="fa-solid fa-heart" size="lg" />)}
+                         &nbsp;Favorite
                     </button>
                 </div>
             </div>

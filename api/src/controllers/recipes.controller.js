@@ -18,8 +18,7 @@ async function getRecipes(request, response){
                 url: url,
                 params: {
                     number: '100',
-                    instructionsRequired: true,
-                    //maxReadyTime: true
+                    instructionsRequired: true
                 }
             };
 
@@ -49,6 +48,7 @@ async function getRecipes(request, response){
                 //console.error(error);
             });
             */
+
         }else{
 
             let options = {
@@ -57,8 +57,7 @@ async function getRecipes(request, response){
                 params: {
                     query: nombre,
                     number: '100',
-                    instructionsRequired: true,
-                    //maxReadyTime: true
+                    instructionsRequired: true
                 }
             };
 
@@ -79,7 +78,7 @@ async function getRecipes(request, response){
             /*
             axios.request(options).then(function (resp) {
 
-                if(resp.data.status !== 'failure' > 0){
+                if(resp.data.status !== 'failure'){
                     resp.data.results.map(rc => $data.push(rc))
                 }
                 response.send($data)
@@ -89,7 +88,7 @@ async function getRecipes(request, response){
                 //console.error(error);
             });
 
-             */
+        */
         }
 
         response.send($data)

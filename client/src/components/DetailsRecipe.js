@@ -30,6 +30,10 @@ const DetailsRecipe = ({getRecipeDetail, recipe}) => {
                     <h1>{recipe.title}</h1>
                 </div>
                 <div className={`mb-2`}>
+                    <h3 className={`mb-1`}>Servings</h3>
+                    <span className={`chips`}><FontAwesomeIcon icon="fa-solid fa-users" size={`lg`}/> {recipe.servings}</span>
+                </div>
+                <div className={`mb-2`}>
                     <h3 className={`mb-1`}>Ready in minutes</h3>
                     <span className="chips"><FontAwesomeIcon icon="fa-regular fa-clock" /> {recipe.readyInMinutes}</span>
                 </div>

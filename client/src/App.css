@@ -721,21 +721,51 @@ div.order button:hover{
   display: inline-block;
 }
 
-.detail-summary, .detail-summary{
+.detail-summary{
   background: #f7f7f7;
   border-radius: 12px;
   padding: 20px 15px;
   box-shadow: 0 5px 15px -5px rgba(0,0,0,0.1);
 }
 
-.detail-summary p, .detail-summary p{
+.detail-summary p{
   text-align: justify;
   line-height: 1.9;
 }
 
+.detail-summary p ol{
+  padding: 0 20px;
+
+}
+
+p > a {
+  color: #049b83 !important;
+  font-weight: bold;
+}
 /*---------------------
  	FORMULARIOS
 ---------------------*/
+
+.css-1s2u09g-control {
+  height: 56px;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 1.7%, 54.9%) !important;
+  border-radius: 12px !important;
+}
+
+.css-1pahdxg-control{
+  height: 56px !important;
+  border-radius: 12px !important;
+}
+
+.css-1rhbuit-multiValue{
+  border-radius: 12px !important;
+  padding: 8px;
+  font-weight: bold;
+  background: #1CC2AB !important;
+  opacity: 0.9;
+}
+
 .columns{
   width: 100%;
   display: flex;
@@ -1276,6 +1306,7 @@ input[type="range"]::-webkit-slider-thumb {
   transform-origin: bottom center;
 }
 
+/*Mensajes*/
 .notiflix-report-content{
   display: flex;
   flex-direction: column;
@@ -1285,4 +1316,8 @@ input[type="range"]::-webkit-slider-thumb {
 .notiflix-report-message{
   font-weight: bold !important;
   font-size: 15px !important;
+}
+
+#NotiflixReportWrap{
+  z-index: 99999 !important;
 }

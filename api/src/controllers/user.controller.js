@@ -1,4 +1,4 @@
-const {User} = require("../db")
+const { User, Recipe, Diet } = require("../db")
 /*
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -26,10 +26,39 @@ async function getUsers(request, response){
 }
 
 async function getUser(request, response){
-    const { id } = request.param
+    const { id } = request.params
     try {
         const user = await User.findByPk(id);
         response.json(user)
+    }catch (error){
+        console.log(error)
+    }
+}
+
+async function getFavorites(request, response){
+    const { userId } = request.params
+    try {
+        const user = await User.findAll({
+            where: {
+                id: userId
+            },
+            include: [
+                {
+                    model: Recipe,
+                    attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings'],
+                    include: Diet
+                }
+            ]
+        });
+        if(user){
+            response.json(user[0].recipes)
+        }else{
+            response.json({
+                message: "No se encontraron registros",
+                error: true
+            })
+        }
+
     }catch (error){
         console.log(error)
     }
@@ -52,6 +81,7 @@ async function registerFavorites( request, response){
 
 module.exports = {
     getUsers,
+    getFavorites,
     getUser,
     registerFavorites
 }

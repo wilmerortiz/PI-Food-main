@@ -12,6 +12,15 @@ const getUsers = () => {
         });
 };
 
+const getFavorites = (userId) => {
+    return axios
+        .get(`${API_URL}users/recipesFavorites/${userId}`)
+        .then((response) => {
+            //console.log(response.data)
+            return response.data;
+        });
+};
+
 const registerFavorite = (user) => {
     return axios.post(API_URL + "users/favorites", user);
 };
@@ -34,7 +43,8 @@ const getAdminBoard = () => {
 */
 export default {
     getUsers,
-    registerFavorite
+    getFavorites,
+    registerFavorite,
     //getPublicContent,
     //getUserBoard,
     //getModeratorBoard,

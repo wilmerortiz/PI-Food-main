@@ -62,4 +62,5 @@ router.get("/api/test/admin",
 router.get('/users', controller.getUsers)
 router.get('/users/:id', controller.getUser)
 router.post('/users/favorites/', controller.registerFavorites)
+router.get('/users/recipesFavorites/:userId', controller.getFavorites)
 module.exports = router;

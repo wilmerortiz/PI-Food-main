@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Component } from "react";
+import Select from 'react-select'
 import { useDispatch, useSelector } from "react-redux";
 
 import Form from "react-validation/build/form";
@@ -49,6 +50,12 @@ const vpassword = (value) => {
     }
 };
 
+const options = [
+    { value: 'admin', label: 'Admin' },
+    { value: 'moderator', label: 'Moderator' },
+    { value: 'user', label: 'User' }
+]
+
 const AddUser = () => {
     const form = useRef();
     const checkBtn = useRef();
@@ -86,6 +93,19 @@ const AddUser = () => {
         })
     }
 
+    const onChangeMultiple = (selectedOption, e) => {
+        let param = e.name
+        user[param] = [];
+        selectedOption.map(op => {
+            user[param].push(op.value)
+        })
+
+        setUser({
+            ...user, [param]: user[param]
+        })
+
+    };
+
     const handleRegister = (e) => {
         e.preventDefault();
 
@@ -112,11 +132,8 @@ const AddUser = () => {
 
                     {!successful &&(
                         <div style={{width: '600px'}}>
-                            <img
-                                src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                                alt="profile-img"
-                                className="profile-img-card"
-                            />
+
+
                             <span className="form-title">
                                 Register User
                             </span>
@@ -134,8 +151,15 @@ const AddUser = () => {
                                        onChange={handleChange}
                                        validations={[required]}/>
                             </div>
-                            <div className="wrap-form-checkbox mb-1" style={{padding: '0 15px'}}>
+                            <div className="wrap-form-checkbox mb-1" style={{padding: '0'}}>
                                 <label className="label-input mb-1">Roles</label>
+                                <Select
+                                    options={options}
+                                    isMulti
+                                    name="roles"
+                                    onChange={onChangeMultiple}
+                                />
+                                {/*
                                 <div className={`roles`} style={{display: 'flex'}}>
                                     <div className="form-checkbox" >
                                         <input type="checkbox" className="input-checkbox cb-types" name="roles" value="admin" id={`role-admin`}
@@ -153,6 +177,7 @@ const AddUser = () => {
                                         <label htmlFor={`role-user`} className="label-checkbox">User</label>
                                     </div>
                                 </div>
+                                */}
                             </div>
                             <div className={`wrap-input bg1`}>
                                 <label htmlFor="username" className="label-input">User Name</label>
