@@ -53,11 +53,11 @@ const AddUser = () => {
     const form = useRef();
     const checkBtn = useRef();
 
-    const [successful, setSuccessful] = useState(false);
-
     const [user, setUser] = useState({
         roles : []
     });
+
+    const [successful, setSuccessful] = useState(false);
 
     const { message } = useSelector(state => state.message);
     const dispatch = useDispatch();

@@ -37,9 +37,9 @@ router.post("/users/register",
         verifySignUp.checkDuplicateUsernameOrEmail,
         verifySignUp.checkRolesExisted
     ],
-    controller.signup
+    controller.register
 );
 
-router.post("/users/login", controller.signin);
+router.post("/users/login", controller.login);
 
 module.exports = router;

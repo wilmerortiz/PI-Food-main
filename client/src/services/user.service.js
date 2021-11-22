@@ -1,8 +1,21 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "http://localhost:3001/test/";
+const API_URL = "http://localhost:3001/";
 
+const getUsers = () => {
+    return axios
+        .get(API_URL + "users")
+        .then((response) => {
+            //console.log(response.data)
+            return response.data;
+        });
+};
+
+const registerFavorite = (user) => {
+    return axios.post(API_URL + "users/favorites", user);
+};
+/*
 const getPublicContent = () => {
     return axios.get(API_URL + "all");
 };
@@ -18,10 +31,12 @@ const getModeratorBoard = () => {
 const getAdminBoard = () => {
     return axios.get(API_URL + "admin", { headers: authHeader() });
 };
-
+*/
 export default {
-    getPublicContent,
-    getUserBoard,
-    getModeratorBoard,
-    getAdminBoard,
+    getUsers,
+    registerFavorite
+    //getPublicContent,
+    //getUserBoard,
+    //getModeratorBoard,
+    //getAdminBoard,
 };

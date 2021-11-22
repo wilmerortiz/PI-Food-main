@@ -54,9 +54,9 @@ const DetailsRecipe = ({getRecipeDetail, recipe}) => {
                     <span className="chips"><FontAwesomeIcon icon="fa-brands fa-gratipay" size={`lg`}/> {recipe.healthScore}</span>
                 </div>
                 <div className="detail detail-summary mb-1">
-                    <h3>Instrucciones</h3>
+                    <h3>Instructions</h3>
                     <p>{/*parse(recipe?.instructions.replace(/\./g, '.<br /><br />'))*/}</p>
-                    <p>{recipe.instructions && recipe.instructions}</p>
+                    <p>{recipe.instructions && parse(recipe.instructions)}</p>
                 </div>
             </section>}
         </>

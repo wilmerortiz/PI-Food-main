@@ -2,15 +2,6 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3001/";
 
-const getUsers = () => {
-    return axios
-        .get(API_URL + "users")
-        .then((response) => {
-            //console.log(response.data)
-            return response.data;
-        });
-};
-
 const register = (user) => {
     return axios.post(API_URL + "users/register", user);
 };
@@ -35,7 +26,6 @@ const logout = () => {
 };
 
 export default {
-    getUsers,
     register,
     login,
     logout,

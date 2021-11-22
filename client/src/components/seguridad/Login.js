@@ -6,7 +6,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
+import { Report } from 'notiflix/build/notiflix-report-aio';
+import { clearMessage } from "../../actions/message";
 import { login } from "../../actions/auth";
 
 const required = (value) => {
@@ -26,7 +27,6 @@ const Login = (props) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-
     const { isLoggedIn } = useSelector(state => state.auth);
     const { message } = useSelector(state => state.message);
 
@@ -90,7 +90,7 @@ const Login = (props) => {
                         <Input type="password" name="password" className="input" id="password"
                                value={password}
                                onChange={onChangePassword}
-                               validations={[required]}/>
+                               validations={[required]} />
                     </div>
 
                     <div className="wrap-button" style={{width: '100%'}}>
@@ -102,13 +102,9 @@ const Login = (props) => {
                         </button>
                     </div>
 
-                    {message && (
-                        <div className="form-group">
-                            <div className="alert alert-danger" role="alert">
-                                {message}
-                            </div>
-                        </div>
-                    )}
+                    {message && Report.failure('WARNING', message, 'OK', function cb() {
+                        dispatch(clearMessage());
+                    }) }
                     <CheckButton style={{ display: "none" }} ref={checkBtn} />
                 </Form>
             </div>

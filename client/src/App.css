@@ -1275,3 +1275,14 @@ input[type="range"]::-webkit-slider-thumb {
   transform: translateX(-50%) scale(0);
   transform-origin: bottom center;
 }
+
+.notiflix-report-content{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.notiflix-report-message{
+  font-weight: bold !important;
+  font-size: 15px !important;
+}

@@ -46,7 +46,7 @@ const useSortableData = (items, config = null) => {
 };
 */
 
-const Content = ({getRecipesAll, getRecipes, listRecipes, loading}) => {
+const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavorite}) => {
     const [recipe , setRecipe] = React.useState({});
 
     /** Sort */

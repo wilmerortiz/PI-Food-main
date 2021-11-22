@@ -17,6 +17,7 @@
     "babel-plugin-macros": "^3.1.0",
     "dotenv": "^10.0.0",
     "html-react-parser": "^1.4.0",
+    "notiflix": "^3.2.2",
     "react": "^17.0.1",
     "react-burger-menu": "^3.0.6",
     "react-dom": "^17.0.1",

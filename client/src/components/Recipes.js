@@ -1,8 +1,28 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
+import {connect, useDispatch, useSelector} from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-const Recipes = ({id, title, img, dishTypes, diets, origin, score, readyInMinutes, servings}) => {
+import { registerFavorite } from "../actions/auth"
+import {Report} from "notiflix/build/notiflix-report-aio";
+import { clearMessage } from "../actions/message";
+
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
+
+const Recipes = ({id, title, img, dishTypes, diets, origin, score, readyInMinutes, servings, registerFavorite}) => {
+
+    const { user: currentUser } = useSelector((state) => state.auth);
+    const [loading, setLoading] = useState(false);
+    const { message } = useSelector(state => state.message);
+    const dispatch = useDispatch();
+
+    const addFavorites = (recipeId) => {
+        let datos = {userId: currentUser.id, recipeId: recipeId}
+        //console.log(datos);
+        registerFavorite(datos)
+    }
+
     return(
+        <>
         <div className={`card zoom`}>
             <div className={`card-image`}>
                 <img src={img} alt="image"/>
@@ -39,11 +59,26 @@ const Recipes = ({id, title, img, dishTypes, diets, origin, score, readyInMinute
                     <Link to={`/recipes/details/${id}?origin=${origin}`}>
                         <FontAwesomeIcon icon="fa-solid fa-circle-info" size="lg" /> Details
                     </Link>
-                    <button><FontAwesomeIcon icon="fa-solid fa-heart" size="lg" /> Favorite</button>
+                    <button onClick={() => addFavorites(id)} disabled={loading}>
+                        {loading && (
+                            <FontAwesomeIcon icon="fa-solid fa-circle-notch" />
+                        )}
+                        <FontAwesomeIcon icon="fa-solid fa-heart" size="lg" /> Favorite
+                    </button>
                 </div>
             </div>
         </div>
+            {message && Report.success('SUCCESS', message, 'OK', function cb() {
+                dispatch(clearMessage());
+            })}
+        </>
     )
 }
 
-export default Recipes
+function mapDispatchToProps(dispatch) {
+    return {
+        registerFavorite: datos => dispatch(registerFavorite(datos)),
+    };
+}
+
+export default connect(null, mapDispatchToProps)(Recipes)

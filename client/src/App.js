@@ -11,12 +11,7 @@ import PageNotFound from "./components/PageNotFound";
 import AddUser from "./components/seguridad/AddUser";
 import Login from "./components/seguridad/Login";
 import UserProfile from "./components/seguridad/UserProfile";
-
-import { logout } from "./actions/auth";
-import { clearMessage } from "./actions/message";
-
-import { history } from "./helpers/history";
-
+import Favourites from "./components/seguridad/Favourites"
 function App() {
   return (
       <React.Fragment>
@@ -33,6 +28,10 @@ function App() {
               <Route exact path='/recipes/details/:id'>
                   <Header/>
                   <DetailsRecipe/>
+              </Route>
+              <Route exact path='/recipes/favorites'>
+                  <Header/>
+                  <Favourites/>
               </Route>
               <Route exact path='/users'>
                   <Header/>

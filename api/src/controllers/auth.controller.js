@@ -6,7 +6,7 @@ const { Op } = require("sequelize");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-const signup = (req, res) => {
+const register = (req, res) => {
     // Save User to Database
     User.create({
         first_name: req.body.first_name,
@@ -40,7 +40,7 @@ const signup = (req, res) => {
         });
 };
 
-const signin = (req, res) => {
+const login = (req, res) => {
     User.findOne({
         where: {
             username: req.body.username
@@ -89,6 +89,6 @@ const signin = (req, res) => {
 };
 
 module.exports = {
-    signup,
-    signin,
+    register,
+    login,
 }

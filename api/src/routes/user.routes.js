@@ -40,6 +40,7 @@ router.use(function(req, res, next) {
     next();
 });
 
+/*
 router.get("/api/test/all", controller.allAccess);
 
 router.get("/api/test/user",
@@ -56,5 +57,9 @@ router.get("/api/test/admin",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
 );
+*/
 
+router.get('/users', controller.getUsers)
+router.get('/users/:id', controller.getUser)
+router.post('/users/favorites/', controller.registerFavorites)
 module.exports = router;
