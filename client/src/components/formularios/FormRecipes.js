@@ -14,12 +14,13 @@ const FormRecipes = ({getDietsAll, addRecipeDB, listDiets, getRecipesAll, respon
         dishTypes: [],
         spoonacularScore: 0,
         healthScore : 0,
-        readyInMinutes: 0
+        readyInMinutes: 5,
+        servings: 1
     });
 
     const [errors, setErrors] = React.useState({
         image: 'URL Picture is required',
-        name: 'Title is required',
+        name: 'Name is required',
         summary: 'Summary is required'
     });
 
@@ -91,12 +92,12 @@ const FormRecipes = ({getDietsAll, addRecipeDB, listDiets, getRecipesAll, respon
             <div className="formulario">
                 <form onSubmit={handleSubmit} className="form">
 
-                    <span className="form-title">
+                    <h1 className="form-title">
                         Create Recipe
-                    </span>
+                    </h1>
 
                     <div className={`${errors.image && 'input-danger'} wrap-input bg1`}>
-                        <label htmlFor="image" className="label-input">URL de Imagen</label>
+                        <label htmlFor="image" className="label-input">URL Image</label>
                         <input type="text" name="image" className="input" id="image"
                                value={recipe.image}
                                onChange={handleChange}/>
@@ -123,11 +124,22 @@ const FormRecipes = ({getDietsAll, addRecipeDB, listDiets, getRecipesAll, respon
                         )}
                     </div>
 
-                    <div className={`wrap-input bg1`}>
-                        <label htmlFor="readyInMinutes" className="label-input">Ready in minutes</label>
-                        <input name="readyInMinutes" className="input" id="readyInMinutes"
-                                  value={recipe.readyInMinutes}
-                                  onChange={handleChange}/>
+                    <div className={`columns`}>
+                        <div className={`wrap-input bg1`}>
+                            <label htmlFor="readyInMinutes" className="label-input"><FontAwesomeIcon icon="fa-solid fa-clock" /> &nbsp; Ready in minutes</label>
+                            <input name="readyInMinutes" className="input" id="readyInMinutes"
+                                   value={recipe.readyInMinutes}
+                                   onChange={handleChange}
+                                   min={1}/>
+                        </div>
+                        <div className={`wrap-input bg1`}>
+                            <label htmlFor="servings" className="label-input"><FontAwesomeIcon icon="fa-solid fa-users" /> &nbsp; Servings</label>
+                            <input name="servings" className="input" id="servings"
+                                   value={recipe.servings}
+                                   onChange={handleChange}
+                                   min={1}
+                            />
+                        </div>
                     </div>
 
                     <div className="wrap-form-range mb-1">

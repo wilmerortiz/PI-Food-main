@@ -7,11 +7,11 @@ export function validate(input) {
     }
 
     if (!input.name) {
-        errors.name = 'Title is required';
+        errors.name = 'Name is required';
     }
 
     if (!input.summary) {
-        errors.summary = 'Title is required';
+        errors.summary = 'Summary is required';
     }
 
     return errors;

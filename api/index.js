@@ -109,6 +109,8 @@ conn.sync({ force: false }).then(() => {
 
                     let $saveData = [];
 
+                    let id = Date.now();
+
                     resp.data.results.map(rc => {
                         let types = [];
 
@@ -118,9 +120,10 @@ conn.sync({ force: false }).then(() => {
                             }
                         });
 
-                        setTimeout( function (){
+                        //setTimeout( function (){
+
                             let newRecipe = Recipe.create({
-                                id: Date.now()+1,
+                                id: id++,
                                 name : rc.title,
                                 image : rc.image,
                                 summary: rc.summary,
@@ -137,7 +140,7 @@ conn.sync({ force: false }).then(() => {
                                 res.addDiets(types);
                                 $saveData.push(newRecipe)
                             })
-                        }, 2)
+                        //}, 2)
 
                     })
 

@@ -585,7 +585,7 @@ div.order button:hover{
   align-content: center;
   text-align: center;
   grid-template-rows: masonry;
-  margin: 0 auto;
+  padding: 0 10px;
 }
 
 .card{
@@ -736,6 +736,11 @@ div.order button:hover{
 /*---------------------
  	FORMULARIOS
 ---------------------*/
+.columns{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
 input {
   outline: none;
   border: none;
@@ -818,6 +823,8 @@ textarea:-ms-input-placeholder { color: #adadad;}
   border-radius: 13px;
   padding: 10px 0 9px 22px;
   margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .rs1-wrap-input {
   width: calc((100% - 30px) / 2);
@@ -1222,15 +1229,15 @@ input[type="range"]::-webkit-slider-thumb {
   transform: translateX(-50%) scale(0);
   transition: transform 0.2s ease-in-out;
   transform-origin: top;
-  background: #616161e6;
+  background: #1CC2AB;
   color: white;
   border-radius: 2px;
-  font-size: 12px;
+  font-size: 13px;
   font-family: Roboto, sans-serif;
-  font-weight: 400;
   z-index: 999;
   text-align: center;
-  white-space: nowrap;
+  font-weight: bold;
+  opacity: 0.9;
 
 }
 [data-md-tooltip]:hover:before {

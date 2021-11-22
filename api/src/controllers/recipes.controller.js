@@ -4,7 +4,6 @@ const {default: axios} = require("axios");
 require('dotenv').config();
 const { API_KEY } = process.env
 
-
 async function getRecipes(request, response){
     const { nombre } = request.query
 
@@ -103,9 +102,11 @@ async function getRecipes(request, response){
 async function getRecipesId(request, response){
     const {idReceta} = request.params
     const {origin} = request.query
-    let url = `https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${API_KEY}`
+
     try{
-        if(origin === 'API'){
+        //if(origin === 'API'){
+        if(idReceta.length < 10){
+            let url = `https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${API_KEY}`
             let axios = require("axios").default;
             let options = {
                 method: 'GET',
@@ -116,7 +117,7 @@ async function getRecipesId(request, response){
                 //console.log(resp.data);
                 response.json(resp.data)
             }).catch(function (error) {
-                console.error(error);
+                console.error(error.message);
             });
         }else{
             const recipe = await Recipe.findByPk(idReceta, {

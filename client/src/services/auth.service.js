@@ -12,12 +12,12 @@ const getUsers = () => {
 };
 
 const register = (user) => {
-    return axios.post(API_URL + "users", user);
+    return axios.post(API_URL + "users/register", user);
 };
 
 const login = (username, password) => {
     return axios
-        .post(API_URL + "login", {
+        .post(API_URL + "users/login", {
             username,
             password,
         })

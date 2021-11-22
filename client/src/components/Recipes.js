@@ -8,7 +8,7 @@ const Recipes = ({id, title, img, dishTypes, diets, origin, score, readyInMinute
                 <img src={img} alt="image"/>
             </div>
             <div className={`card-body`}>
-                <div className={`card-title`}>
+                <div className={`card-title md-tooltip`} data-md-tooltip={title}>
                     <h3>{title}</h3>
                 </div>
                 {/*<div className="dishTypes mb-1">

@@ -52,7 +52,7 @@ const Login = (props) => {
         if (checkBtn.current.context._errors.length === 0) {
             dispatch(login(username, password))
                 .then(() => {
-                    props.history.push("/profile");
+                    props.history.push("/users/profile");
                     window.location.reload();
                 })
                 .catch(() => {
@@ -64,7 +64,7 @@ const Login = (props) => {
     };
 
     if (isLoggedIn) {
-        return <Redirect to="/profile" />;
+        return <Redirect to="/users/profile" />;
     }
 
     return (
@@ -93,7 +93,7 @@ const Login = (props) => {
                                validations={[required]}/>
                     </div>
 
-                    <div className="form-group">
+                    <div className="wrap-button" style={{width: '100%'}}>
                         <button className="btn btn-block" disabled={loading}>
                             {loading && (
                                 <FontAwesomeIcon icon="fa-solid fa-circle-notch" />

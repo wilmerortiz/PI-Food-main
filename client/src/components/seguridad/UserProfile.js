@@ -2,11 +2,11 @@ import React from "react";
 import { Redirect } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
-const Profile = () => {
+const UserProfile = () => {
     const { user: currentUser } = useSelector((state) => state.auth);
 
     if (!currentUser) {
-        return <Redirect to="/login" />;
+        return <Redirect to="/users/login" />;
     }
 
     return (
@@ -35,4 +35,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default UserProfile;

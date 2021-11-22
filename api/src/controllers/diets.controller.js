@@ -1,4 +1,4 @@
-const {Recipe, Diet} = require("../db")
+const { Diet } = require("../db")
 
 async function getDiet(request, response){
     try {

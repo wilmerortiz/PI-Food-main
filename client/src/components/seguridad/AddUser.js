@@ -8,7 +8,6 @@ import { isEmail } from "validator";
 
 import { register } from "../../actions/auth";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import ModalMessage from "../Flash/modalMessage";
 
 const required = (value) => {
     if (!value) {
@@ -56,7 +55,9 @@ const AddUser = () => {
 
     const [successful, setSuccessful] = useState(false);
 
-    const [user , setUser] = useState({});
+    const [user, setUser] = useState({
+        roles : []
+    });
 
     const { message } = useSelector(state => state.message);
     const dispatch = useDispatch();
@@ -64,6 +65,24 @@ const AddUser = () => {
     const handleChange = (e) => {
         setUser({
             ...user, [e.target.name]: e.target.value
+        })
+    }
+
+    const handleChecked =  (e) => {
+        //console.log(e.target.checked)
+        let param = e.target.name
+        if(e.target.checked){
+            user[param].push(e.target.value)
+        }else{
+            let index = user[param].indexOf(e.target.value);
+
+            if (index > -1) {
+                user[param].splice(index, 1);
+            }
+        }
+
+        setUser({
+            ...user, [e.target.name]: user.roles
         })
     }
 
@@ -114,6 +133,26 @@ const AddUser = () => {
                                        value={user.last_name}
                                        onChange={handleChange}
                                        validations={[required]}/>
+                            </div>
+                            <div className="wrap-form-checkbox mb-1" style={{padding: '0 15px'}}>
+                                <label className="label-input mb-1">Roles</label>
+                                <div className={`roles`} style={{display: 'flex'}}>
+                                    <div className="form-checkbox" >
+                                        <input type="checkbox" className="input-checkbox cb-types" name="roles" value="admin" id={`role-admin`}
+                                               onChange={handleChecked}/>
+                                        <label htmlFor={`role-admin`} className="label-checkbox">Admin</label>
+                                    </div>
+                                    <div className="form-checkbox" >
+                                        <input type="checkbox" className="input-checkbox cb-types" name="roles" value="moderator" id={`role-moderator`}
+                                               onChange={handleChecked}/>
+                                        <label htmlFor={`role-moderator`} className="label-checkbox">Moderator</label>
+                                    </div>
+                                    <div className="form-checkbox" >
+                                        <input type="checkbox" className="input-checkbox cb-types" name="roles" value="user" id={`role-user`}
+                                               onChange={handleChecked}/>
+                                        <label htmlFor={`role-user`} className="label-checkbox">User</label>
+                                    </div>
+                                </div>
                             </div>
                             <div className={`wrap-input bg1`}>
                                 <label htmlFor="username" className="label-input">User Name</label>

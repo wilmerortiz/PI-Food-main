@@ -10,6 +10,12 @@ import DetailsRecipe from "./components/DetailsRecipe";
 import PageNotFound from "./components/PageNotFound";
 import AddUser from "./components/seguridad/AddUser";
 import Login from "./components/seguridad/Login";
+import UserProfile from "./components/seguridad/UserProfile";
+
+import { logout } from "./actions/auth";
+import { clearMessage } from "./actions/message";
+
+import { history } from "./helpers/history";
 
 function App() {
   return (
@@ -39,6 +45,10 @@ function App() {
               <Route exact path='/users/login'>
                   <Header/>
                   <Login/>
+              </Route>
+              <Route exact path='/users/profile'>
+                  <Header/>
+                  <UserProfile/>
               </Route>
               <Route component={PageNotFound}/>
           </Switch>
