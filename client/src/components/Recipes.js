@@ -8,7 +8,7 @@ import { clearMessage } from "../actions/message";
 
 //import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
-const Recipes = ({id, title, img, dishTypes, diets, origin, score, readyInMinutes, servings, registerFavorite}) => {
+const Recipes = ({id, title, img, dishTypes, diets, origin, score, readyInMinutes, servings, createdAt, registerFavorite}) => {
 
     const { user: currentUser } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
@@ -38,14 +38,30 @@ const Recipes = ({id, title, img, dishTypes, diets, origin, score, readyInMinute
             });
     }
 
+    function calculardiasDiscount() {
+        var timeStart = new Date(createdAt);
+        var timeEnd = new Date();
+        var actualDate = new Date();
+        if (timeEnd > timeStart)
+        {
+            var diff = timeEnd.getTime() - timeStart.getTime();
+            let time = Math.round(diff / (1000 * 60 * 60 * 24));
+            return time;
+        }
+
+    }
+
     return(
         <>
         <div className={`card zoom`}>
-            <div className={`card-image`}>
-                <img src={img} alt="image"/>
+            <div className={`card-image`} style={{backgroundImage: `url(${img})`}}>
+                {calculardiasDiscount() <= 1 ? <h3 className={`span-new`}>
+                    <FontAwesomeIcon className={`swing`} icon="fa-solid fa-bell" size={`lg`}/> &nbsp; New Recipe
+                </h3> : '' }
+
             </div>
             <div className={`card-body`}>
-                <div className={`card-title md-tooltip`} data-md-tooltip={title}>
+                <div>
                     <h3>{title}</h3>
                 </div>
                 {/*<div className="dishTypes mb-1">
@@ -69,7 +85,10 @@ const Recipes = ({id, title, img, dishTypes, diets, origin, score, readyInMinute
                     </div>
                     <div>
                         <h5>Score</h5>
-                        <span className="chips-sm"><FontAwesomeIcon icon="fa-solid fa-star" size={`lg`}/> {score}</span>
+                        <span className="chips-sm">
+                            <FontAwesomeIcon icon="fa-solid fa-star" size={`lg`} style={{color: 'gold'}}/>
+                             {5*score/100} ({score})
+                        </span>
                     </div>
                 </div>
                 <div className={`card-button`}>

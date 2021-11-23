@@ -6,6 +6,7 @@ import Loading from "../Loading";
 import EmptyData from "../EmptyData";
 import NavDiets2 from "./NavDiets2";
 import CardFavorites from "./CardFovorites";
+import fondo from "../../assets/img/pattern1.png";
 
 const Favourites = ({getFavorites, listFavorites, loading}) => {
     const { user: currentUser } = useSelector((state) => state.auth);
@@ -15,7 +16,7 @@ const Favourites = ({getFavorites, listFavorites, loading}) => {
     }, []);
 
     return(
-        <div className="container">
+        <div className="container" style={{backgroundImage: `url(${fondo})`, minHeight: '100vh'}}>
             <NavDiets2 sidebar={sidebar} setSidebar={setSidebar}/>
             <div className={sidebar ? 'content active' : 'content'}>
                 <h1 style={{textAlign:'center'}}>Favorites Recipes of {currentUser.first_name}</h1>
@@ -33,6 +34,7 @@ const Favourites = ({getFavorites, listFavorites, loading}) => {
                             score={rc.spoonacularScore}
                             readyInMinutes={rc.readyInMinutes}
                             servings={rc.servings}
+                            createdAt={rc.createdAt}
                         />
                     )}</div>}
                 </div>

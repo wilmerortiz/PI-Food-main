@@ -23,7 +23,7 @@ async function getRecipes(request, response){
             };
 
             const recipe = await Recipe.findAll({
-                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings'],
+                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings', 'createdAt'],
                 order: [['id', 'DESC']],
                 include: {
                     model: Diet,
@@ -62,7 +62,7 @@ async function getRecipes(request, response){
             };
 
             const recipe = await Recipe.findAll({
-                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings'],
+                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings', 'createdAt'],
                 where: {
                     name: {
                         [Op.iLike] : `%${nombre}%`
@@ -120,7 +120,7 @@ async function getRecipesId(request, response){
             });
         }else{
             const recipe = await Recipe.findByPk(idReceta, {
-                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings'],
+                attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings', 'createdAt'],
                 include: Diet
             });
 

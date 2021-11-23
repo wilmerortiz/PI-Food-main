@@ -45,9 +45,10 @@ async function getFavorites(request, response){
             include: [
                 {
                     model: Recipe,
-                    attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings'],
-                    include: Diet
-                }
+                    attributes: ['id', ['name', 'title'], 'image', 'summary', 'spoonacularScore', 'healthScore','instructions', 'origin', 'dishTypes', 'readyInMinutes', 'servings', 'createdAt'],
+                    include: Diet,
+                    order: ['createdAt', 'ASC'],
+                },
             ]
         });
         if(user){

@@ -6,6 +6,7 @@ import parse from 'html-react-parser';
 import { getRecipeDetail } from '../actions';
 import Loading from "./Loading";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import fondo from '../assets/img/pattern1.png'
 
 const DetailsRecipe = ({getRecipeDetail, recipe}) => {
     const { search } = useLocation();
@@ -22,7 +23,7 @@ const DetailsRecipe = ({getRecipeDetail, recipe}) => {
     return(
         <>
             {!recipe.id ? <Loading/> :
-            <section className="recipeDetails" key={id} style={{flexDirection: 'column' , textAlign:'center'}}>
+            <section className="recipeDetails" key={id} style={{backgroundImage: `url(${fondo})`, flexDirection: 'column' , textAlign:'center'}}>
                 <div className="detail-img mb-1">
                     <img src={recipe.image} alt="" style={{borderRadius: '12px'}}/>
                 </div>

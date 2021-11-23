@@ -1,6 +1,5 @@
 import React from "react";
 import {Link} from "react-router-dom";
-//import fondo from '../assets/hero.jpg'
 import fondo from '../assets/fondo2.jpg'
 
 const LandingPage = () => {

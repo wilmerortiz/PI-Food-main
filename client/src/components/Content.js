@@ -10,6 +10,7 @@ import NavDiets from "./NavDiets";
 import EmptyData from "./EmptyData";
 import Paginate from "./Paginate";
 
+import fondo from '../assets/img/pattern1.png'
 /*
 const useSortableData = (items, config = null) => {
     const [sortConfig, setSortConfig] = useState(config);
@@ -142,7 +143,7 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavor
     }
 
     return(
-        <div className="container">
+        <div className="container" style={{backgroundImage: `url(${fondo})`, minHeight: '92.8vh'}}>
             <Link to="/recipes/create-recipe" className={`btn-float-rb md-tooltip--left`} data-md-tooltip="Create Recipe">
                 <FontAwesomeIcon icon="fa-solid fa-plus" size="2x"/>
             </Link>
@@ -164,12 +165,10 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavor
                             <label htmlFor="itemsPorPage">Show </label>
                             <select name="itemsPorPage" defaultValue={itemsPorPage} id="itemsPorPage"
                                     onChange={changeLimit}>
-                                <option value="5">5</option>
+                                <option value="3">3</option>
+                                <option value="6">6</option>
                                 <option value="9">9</option>
-                                <option value="10">10</option>
-                                <option value="15">15</option>
-                                <option value="20">20</option>
-                                <option value="50">50</option>
+                                <option value="18">18</option>
                             </select>
                             <label htmlFor="itemsPorPage"> entries</label>
                         </div>
@@ -212,6 +211,7 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavor
                             score={rc.spoonacularScore}
                             readyInMinutes={rc.readyInMinutes}
                             servings={rc.servings}
+                            createdAt={rc.createdAt}
                         />
                         )}</div>}
                 </div>
