@@ -11,7 +11,7 @@ async function getRecipes(request, response){
     let $data = [];
     try{
         const axios = require("axios").default;
-        if(!nombre){
+        if(!nombre || nombre === 'undefined'){
 
             let options = {
                 method: 'GET',
@@ -45,9 +45,9 @@ async function getRecipes(request, response){
 
             }).catch(function (error) {
                 response.send($data)
-                //console.error(error);
+                console.error(error.message);
             });
-            */
+        */
 
         }else{
 
@@ -85,10 +85,10 @@ async function getRecipes(request, response){
 
             }).catch(function (error) {
                 response.send($data)
-                //console.error(error);
+                console.error(error.message);
             });
-
         */
+
         }
 
         response.send($data)

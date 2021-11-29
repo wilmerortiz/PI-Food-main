@@ -13,7 +13,7 @@ import { login } from "../../actions/auth";
 const required = (value) => {
     if (!value) {
         return (
-            <div className="text-error" role="alert">
+            <div className="text-error">
                 This field is required!
             </div>
         );
@@ -68,45 +68,48 @@ const Login = (props) => {
     }
 
     return (
-        <section className="login">
-            <div className="card-login">
-                <img
-                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    alt="profile-img"
-                    className="profile-img-card"
-                />
+        <section className={`container-user`}>
+            <div className={`login`}>
+                <div className="card-login">
+                    <h1 className={`mb-1`}>Sign In</h1>
+                    <img
+                        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                        alt="profile-img"
+                        className="profile-img-card"
+                    />
 
-                <Form onSubmit={handleLogin} ref={form}>
-                    <div className={`wrap-input bg1`}>
-                        <label htmlFor="username" className="label-input">User Name</label>
-                        <Input type="text" name="username" className="input" id="username"
-                               value={username}
-                               onChange={onChangeUsername}
-                               validations={[required]}/>
-                    </div>
+                    <Form onSubmit={handleLogin} ref={form} style={{width: '100%'}}>
+                        <div className={`wrap-input bg1`}>
+                            <label htmlFor="username" className="label-input">User Name</label>
+                            <Input type="text" name="username" className="input" id="username"
+                                   value={username}
+                                   onChange={onChangeUsername}
+                                   validations={[required]}/>
+                        </div>
 
-                    <div className={`wrap-input bg1`}>
-                        <label htmlFor="password" className="label-input">Password</label>
-                        <Input type="password" name="password" className="input" id="password"
-                               value={password}
-                               onChange={onChangePassword}
-                               validations={[required]} />
-                    </div>
+                        <div className={`wrap-input bg1`}>
+                            <label htmlFor="password" className="label-input">Password</label>
+                            <Input type="password" name="password" className="input" id="password"
+                                   value={password}
+                                   onChange={onChangePassword}
+                                   validations={[required]} />
+                        </div>
 
-                    <div className="wrap-button" style={{width: '100%'}}>
-                        <button className="btn btn-block" disabled={loading}>
-                            {loading && (
-                                <FontAwesomeIcon icon="fa-solid fa-circle-notch" />
-                            )}
-                            <span>Login</span>
-                        </button>
-                    </div>
+                        <div className="wrap-button" style={{width: '100%'}}>
+                            <button className="btn btn-block" disabled={loading}>
+                                {loading && (
+                                    <FontAwesomeIcon icon="fa-solid fa-circle-notch" />
+                                )}
+                                <span>Login</span>
+                            </button>
+                        </div>
 
-                    {message && Report.failure('WARNING', message, 'OK', function cb() {
-                        dispatch(clearMessage());
-                    }) }
-                    <CheckButton style={{ display: "none" }} ref={checkBtn} />
-                </Form>
+                        {message && Report.failure('WARNING', message, 'OK', function cb() {
+                            dispatch(clearMessage());
+                        }) }
+                        <CheckButton style={{ display: "none" }} ref={checkBtn} />
+                    </Form>
+                </div>
             </div>
         </section>
     );

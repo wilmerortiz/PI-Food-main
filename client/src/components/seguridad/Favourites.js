@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {connect, useSelector} from "react-redux";
 import { getFavorites } from "../../actions/auth";
-
+import Loader from "../Loader";
 import Loading from "../Loading";
 import EmptyData from "../EmptyData";
 import NavDiets2 from "./NavDiets2";
@@ -21,7 +21,7 @@ const Favourites = ({getFavorites, listFavorites, loading}) => {
             <div className={sidebar ? 'content active' : 'content'}>
                 <h1 style={{textAlign:'center'}}>Favorites Recipes of {currentUser.first_name}</h1>
                 <div style={{paddingTop:"20px"}}>
-                    {loading ? <Loading/> : listFavorites?.length === 0 ? <EmptyData/> :
+                    {loading ? <Loader/> : listFavorites?.length === 0 ? <EmptyData/> :
                         <div className="reviews">{listFavorites.map( rc =>
                         <CardFavorites
                             key={rc.id}

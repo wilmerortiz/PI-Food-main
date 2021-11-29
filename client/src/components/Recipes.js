@@ -61,8 +61,8 @@ const Recipes = ({id, title, img, dishTypes, diets, origin, score, readyInMinute
 
             </div>
             <div className={`card-body`}>
-                <div>
-                    <h3>{title}</h3>
+                <div className={`md-tooltip`} data-md-tooltip={title}>
+                    <h3 >{title}</h3>
                 </div>
                 {/*<div className="dishTypes mb-1">
                     <h5>Dishes Types </h5>

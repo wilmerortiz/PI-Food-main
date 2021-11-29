@@ -125,15 +125,13 @@ const AddUser = () => {
     };
 
     return(
-        <section>
+        <section className={`container-user`}>
 
-            <div className="fformulario" style={{width: '600px'}}>
+            <div className="form-register">
                 <Form onSubmit={handleRegister} ref={form} className="form">
 
                     {!successful &&(
-                        <div style={{width: '600px'}}>
-
-
+                        <div className="container-form">
                             <span className="form-title">
                                 Register User
                             </span>
@@ -180,7 +178,7 @@ const AddUser = () => {
                                 */}
                             </div>
                             <div className={`wrap-input bg1`}>
-                                <label htmlFor="username" className="label-input">User Name</label>
+                                <label htmlFor="username" className="label-input">UserName</label>
                                 <Input type="text" name="username" className="input" id="username"
                                        value={user.username}
                                        onChange={handleChange}
@@ -195,7 +193,7 @@ const AddUser = () => {
                             </div>
                             <div className={`wrap-input bg1`}>
                                 <label htmlFor="password" className="label-input">Password</label>
-                                <Input type="text" name="password" className="input" id="password"
+                                <Input type="password" name="password" className="input" id="password"
                                        value={user.password}
                                        onChange={handleChange}
                                        validations={[required, vpassword]}/>

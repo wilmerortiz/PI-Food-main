@@ -39,7 +39,7 @@ function Range(props) {
     }, []);
 
     //Selected value effect for Height
-    function selectedEffectHeight(e) {
+    function selectedEffectHealthScore(e) {
         const val = (e.target.value - 0) * 1;
         e.target.style.background =
             "linear-gradient(to right, #1CC2AB 0%, #1CC2AB " +
@@ -50,7 +50,7 @@ function Range(props) {
     }
 
     //Selected value effect for Weight
-    function selectedEffectWeight(e) {
+    function selectedEffectScore(e) {
         const val = (e.target.value - 0) * 1;
         e.target.style.background =
             "linear-gradient(to right, #1CC2AB 0%, #1CC2AB " +
@@ -72,7 +72,7 @@ function Range(props) {
                     id="rangeScore"
                     min="0"
                     max="100"
-                    onInput={selectedEffectHeight}
+                    onInput={selectedEffectHealthScore}
                     onChange={props.getScore}
                 />
             </div>
@@ -87,7 +87,7 @@ function Range(props) {
                     id="rangeHealthScore"
                     min="0"
                     max="100"
-                    onInput={selectedEffectWeight}
+                    onInput={selectedEffectScore}
                     onChange={props.getHealthScore}
                 />
             </div>

@@ -59,7 +59,7 @@ const CardFavorites = ({id, title, img, dishTypes, diets, origin, score, readyIn
 
                 </div>
                 <div className={`card-body`}>
-                    <div >
+                    <div className={`md-tooltip`} data-md-tooltip={title}>
                         <h3>{title}</h3>
                     </div>
                     {/*<div className="dishTypes mb-1">

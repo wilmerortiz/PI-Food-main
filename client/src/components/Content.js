@@ -9,45 +9,9 @@ import Loading from "./Loading";
 import NavDiets from "./NavDiets";
 import EmptyData from "./EmptyData";
 import Paginate from "./Paginate";
+import Loader from "./Loader";
 
-import fondo from '../assets/img/pattern1.png'
-/*
-const useSortableData = (items, config = null) => {
-    const [sortConfig, setSortConfig] = useState(config);
-
-    const sortedItems = useMemo(() => {
-        let sortableItems = [...items];
-        if (sortConfig !== null) {
-            sortableItems.sort((a, b) => {
-                if (a[sortConfig.key] < b[sortConfig.key]) {
-                    return sortConfig.direction === "ascending" ? -1 : 1;
-                }
-                if (a[sortConfig.key] > b[sortConfig.key]) {
-                    return sortConfig.direction === "ascending" ? 1 : -1;
-                }
-                return 0;
-            });
-        }
-        return sortableItems;
-    }, [items, sortConfig]);
-
-    const requestSort = key => {
-        let direction = "ascending";
-        if (
-            sortConfig &&
-            sortConfig.key === key &&
-            sortConfig.direction === "ascending"
-        ) {
-            direction = "descending";
-        }
-        setSortConfig({ key, direction });
-    };
-
-    return { items: sortedItems, requestSort, sortConfig };
-};
-*/
-
-const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavorite}) => {
+const Content = ({getRecipesAll, getRecipes, listRecipes, loading}) => {
     const [recipe , setRecipe] = React.useState({});
 
     /** Sort */
@@ -59,41 +23,7 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavor
         return sortConfig.key === name ? sortConfig.direction : undefined;
     };
 
-    /** Paginate **/
-    const [currentPage, setCurrentPage] = useState(1)
-    const [itemsPorPage, setItemsPorPage] = useState(9)//Items por página
-
-    const [pageNumberLimit, setPageNumberLimit] = useState(3);
-    const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(3);//Limite de numero por pagina
-    const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
-
-    const [sidebar, setSidebar] = useState(false);
-
-    const handleClick = (e) => {
-        setCurrentPage(Number(e.target.id))
-    }
-
-    const pages = []
-    for (let i = 1; i <= Math.ceil(items.length/itemsPorPage) ; i++) {
-        pages.push(i)
-    }
-
-    const indexOfLastItem = currentPage * itemsPorPage //5*10 = 50
-    const indexOfFirstItem = indexOfLastItem - itemsPorPage
-    const currentItems = items.slice(indexOfFirstItem, indexOfLastItem)
-
-    const renderPageNumbers = pages.map(number =>{
-        if(number < maxPageNumberLimit + 1 && number > minPageNumberLimit){
-            return(<li
-                key={number}
-                id={number}
-                onClick={handleClick}
-                className={currentPage === number ? 'active' : ''}>{number}</li>)
-        }else{
-            return null
-        }
-    } )
-
+    /** Search by name */
     const handleChange = (e) => {
         setRecipe({
             ...recipe, [e.target.name]: e.target.value
@@ -105,17 +35,54 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavor
         getRecipes(recipe)
     }
 
+    /** Cargamos la lista de Recetas  */
     useEffect(() => {
-        //if(listRecipes.length === 0 ){
+        if(listRecipes.length === 0) {
             getRecipesAll();
-        //}
+        }
     }, []);
 
+    /** Active y desactive navbar **/
+    const [sidebar, setSidebar] = useState(false);
+
+    /** Paginate **/
+    const [currentPage, setCurrentPage] = useState(1) // Número de página inicial
+    const [itemsPorPage, setItemsPorPage] = useState(9) // Items por página
+
+    const [pageNumberLimit, setPageNumberLimit] = useState(4); // Numero de paginas top
+    const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(3); // Limite de numero por pagina
+    const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
+
+    const handleClick = (e) => {
+        setCurrentPage(Number(e.target.id))
+    }
+
+    const pages = []
+    for (let i = 1; i <= Math.ceil(items.length/itemsPorPage) ; i++) {
+        pages.push(i)
+    }
+
+    const indexOfLastItem = currentPage * itemsPorPage // 1*9=9, 2*9=18, 3*9=27 ...
+    const indexOfFirstItem = indexOfLastItem - itemsPorPage // 9-9=0, 18-9=9, 27-9=18 ...
+    const currentItems = items.slice(indexOfFirstItem, indexOfLastItem) //Sacamos 9 registros, 9 registros ...
+
+    const renderPageNumbers = pages.map(page =>{
+        if(page < maxPageNumberLimit + 1 && page > minPageNumberLimit){
+            return(<li
+                key={page}
+                id={page}
+                onClick={handleClick}
+                className={currentPage === page ? 'active' : ''}>{page}</li>)
+        }else{
+            return null
+        }
+    } )
+
     const handleNext = () => {
-        setCurrentPage(currentPage + 1)
+        setCurrentPage(currentPage + 1) // Actualizamos el estado del numero de pagina active
         if(currentPage + 1 > maxPageNumberLimit) {
-            setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
-            setMinPageNumberLimit(minPageNumberLimit + pageNumberLimit)
+            setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit); // 3+3=6, 6+3=9 ...
+            setMinPageNumberLimit(minPageNumberLimit + pageNumberLimit); // 0+3=3, 3+3=6 ...
         }
     }
 
@@ -129,7 +96,16 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavor
 
     let pageIncrement = null;
     if(pages.length > maxPageNumberLimit){
-        pageIncrement = <li onClick={handleNext}><FontAwesomeIcon icon="fa-solid fa-ellipsis" /></li>
+        pageIncrement = (<li onClick={handleNext}><FontAwesomeIcon icon="fa-solid fa-ellipsis" /></li>)
+    }
+
+    let pageTop = null;
+    if(pages.length > maxPageNumberLimit){
+        pageTop = (<li
+            key={pages.length}
+            id={pages.length}
+            onClick={handleClick}
+            className={currentPage === pages.length ? 'active' : ''}>{pages.length}</li>)
     }
 
     let pageDecrement = null;
@@ -137,13 +113,22 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavor
         pageDecrement = <li onClick={handlePrev}><FontAwesomeIcon icon="fa-solid fa-ellipsis" /></li>
     }
 
+    let pageInit = null;
+    if(minPageNumberLimit >= 1){
+        pageInit = (<li
+            key={1}
+            id={1}
+            onClick={handleClick}
+            className={currentPage === 1 ? 'active' : ''}>{1}</li>)
+    }
+
     const changeLimit = (e) => {
         e.preventDefault()
-        setItemsPorPage(e.target.value);
+        setItemsPorPage(Number(e.target.value));
     }
 
     return(
-        <div className="container" style={{backgroundImage: `url(${fondo})`, minHeight: '92.8vh'}}>
+        <div className="container" style={{ minHeight: '92.8vh'}}>
             <Link to="/recipes/create-recipe" className={`btn-float-rb md-tooltip--left`} data-md-tooltip="Create Recipe">
                 <FontAwesomeIcon icon="fa-solid fa-plus" size="2x"/>
             </Link>
@@ -154,7 +139,7 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavor
                 <div className="actions">
                     <form onSubmit={handleSubmit}>
                         <div className="search">
-                            <input type="search" placeholder="Search" name="name" value={recipe.name} onChange={handleChange}/>
+                            <input type="search" placeholder="Search by Name Recipe " name="name" value={recipe.name} onChange={handleChange}/>
                             <button type="submit" className="btn">
                                 <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" size="lg"/>
                             </button>
@@ -162,7 +147,7 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavor
                     </form>
                     <form>
                         <div className="items-pages">
-                            <label htmlFor="itemsPorPage">Show </label>
+                            <label htmlFor="itemsPorPage">Showing </label>
                             <select name="itemsPorPage" defaultValue={itemsPorPage} id="itemsPorPage"
                                     onChange={changeLimit}>
                                 <option value="3">3</option>
@@ -170,7 +155,8 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavor
                                 <option value="9">9</option>
                                 <option value="18">18</option>
                             </select>
-                            <label htmlFor="itemsPorPage"> entries</label>
+                            <label htmlFor="itemsPorPage"> records </label>
+                            <label htmlFor=""> &nbsp; of {items.length} Total</label>
                         </div>
                     </form>
 
@@ -180,26 +166,38 @@ const Content = ({getRecipesAll, getRecipes, listRecipes, loading, registerFavor
                         renderPageNumbers={renderPageNumbers}
                         pageIncrement={pageIncrement}
                         currentPage={currentPage}
+                        pageInit={pageInit}
+                        pageTop={pageTop}
                         handleNext={handleNext}
-                        pages={pages}/>
+                        pages={pages}
+                    />
 
                     <div className="order">
-                        <button type="button" data-md-tooltip="Order Desc/Asc"
-                                onClick={() => requestSort("title")}
-                                className={`md-tooltip ${getClassNamesFor("title")}`}>
-                            <FontAwesomeIcon icon="fa-solid fa-arrow-up-a-z" size="lg"/> &nbsp;
-                            <FontAwesomeIcon icon="fa-solid fa-arrow-down-z-a" size="lg"/>
+                        <button
+                            type="button"
+                            data-md-tooltip="Order Desc/Asc"
+                            onClick={() => requestSort("title")}
+                            className={`md-tooltip ${getClassNamesFor("title")}`}>
+                            {getClassNamesFor("title") === 'ascending' ?
+                                (<FontAwesomeIcon icon="fa-solid fa-arrow-up-a-z" size="lg"/>) :
+                                (<FontAwesomeIcon icon="fa-solid fa-arrow-down-z-a" size="lg"/>)
+                            }
                         </button>
-                        <button type="button" data-md-tooltip="Order Score"
-                                onClick={() => requestSort("spoonacularScore")}
-                                className={`md-tooltip ${getClassNamesFor("spoonacularScore")}`}>
-                            <FontAwesomeIcon icon="fa-solid fa-arrow-up-1-9" size="lg"/> &nbsp;
-                            <FontAwesomeIcon icon="fa-solid fa-arrow-down-9-1" size="lg"/>
+
+                        <button
+                            type="button"
+                            data-md-tooltip="Order Score"
+                            onClick={() => requestSort("spoonacularScore")}
+                            className={`md-tooltip ${getClassNamesFor("spoonacularScore")}`}>
+                            {getClassNamesFor("spoonacularScore") === 'ascending' ?
+                                (<FontAwesomeIcon icon="fa-solid fa-arrow-up-1-9" size="lg"/>) :
+                                (<FontAwesomeIcon icon="fa-solid fa-arrow-down-9-1" size="lg"/>)
+                            }
                         </button>
                     </div>
                 </div>
                 <div style={{paddingTop:"0"}}>
-                    {loading ? <Loading/> : currentItems.length === 0 ? <EmptyData/> : <div className="reviews">{currentItems?.map( rc =>
+                    {loading ? <Loader/> : currentItems.length === 0 ? <EmptyData/> : <div className="reviews">{currentItems?.map( rc =>
                         <Recipes
                             key={rc.id}
                             id={rc.id}

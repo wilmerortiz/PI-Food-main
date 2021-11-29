@@ -25,10 +25,10 @@ const Header = () => {
     return(
         <header>
             <div className="header-logo">
-                <img src={logo} alt="logo" className="logo"/>
-                <h2>
-                    <Link to="/home">FOOD APP</Link>
-                </h2>
+                <Link to="/home" className={`logo-home`}>
+                    <img src={logo} alt="logo" className="logo"/>
+                    <span className={`logo-text`}>Food App</span>
+                </Link>
             </div>
 
             <nav>
@@ -49,7 +49,7 @@ const Header = () => {
                 <li>
                     {!currentUser ?
                         <Link to="/users/register" className={`md-tooltip`} data-md-tooltip="Register">
-                        <FontAwesomeIcon icon="fa-solid fa-user-plus" size={`lg`}/>
+                            <FontAwesomeIcon icon="fa-solid fa-user-plus" size={`lg`}/>
                         </Link> :
                         <Link to="/users/profile" className={`md-tooltip`} data-md-tooltip={`${currentUser.first_name}`}>
                             <FontAwesomeIcon icon="fa-solid fa-user" size={`lg`}/>
@@ -60,7 +60,7 @@ const Header = () => {
                 <li>
                     {!currentUser ?
                         <Link to="/users/login" className={`md-tooltip`} data-md-tooltip="Login">
-                        <FontAwesomeIcon icon="fa-solid fa-user-lock" size="lg"/>
+                            <FontAwesomeIcon icon="fa-solid fa-user-lock" size="lg"/>
                         </Link> :
                         <Link to="/users/login" className={`md-tooltip`} data-md-tooltip="Logout" onClick={logOut}>
                             <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />

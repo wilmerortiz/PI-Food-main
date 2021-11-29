@@ -1,8 +1,8 @@
 const initialState = {
     loading: true,
     recipesLoaded: [],
-    searchResults: [],
     filterResults: [],
+    searchResults: [],
     dietsLoaded:[],
     recipeDetail: {},
     $responses: {
@@ -48,13 +48,14 @@ export default function rootReducers (state = initialState, action) {
             return {
                 ...state,
                 recipeDetail: action.payload,
-                loading: true,
+                loading: false,
             };
         case "GET_DIETS_ALL":
             return {
                 ...state,
                 dietsLoaded: action.payload,
                 searchResults: action.payload,
+                recipesLoaded: state.filterResults,
             };
         case "FILTER_BY_DIET":
             let lista = [];
